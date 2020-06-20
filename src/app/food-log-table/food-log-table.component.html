@@ -1,0 +1,16 @@
+<div class="container-fluid pt-4">
+  <div class="row border font-weight-bold">
+    <div class="col-3">Date</div>
+    <div class="col-3">Calories</div>
+    <div class="col-2">Protein</div>
+    <div class="col-2">Fats</div>
+    <div class="col-2">Carbs</div>
+  </div>
+  <div *ngFor="let dietDay of dietDays" class="row border">
+    <div class="col-3">{{ dietDay.date}}</div>
+    <div class="col-3">{{ dietDay.macros.calories }}</div>
+    <div class="col-2">{{ dietDay.macros.protein }}</div>
+    <div class="col-2">{{ dietDay.macros.fats }}</div>
+    <div class="col-2">{{ dietDay.macros.carbs }}</div>
+  </div>
+</div>

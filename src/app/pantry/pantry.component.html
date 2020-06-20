@@ -1,0 +1,10 @@
+
+<div class="container-fluid">
+  <div *ngFor="let foodItem of foodItems" class="row border">
+    <div class="col-3">{{ foodItem.name }}</div>
+    <div class="col-3">{{ foodItem.macros.calories }}</div>
+    <div class="col-2">{{ foodItem.macros.protein }}</div>
+    <div class="col-2">{{ foodItem.macros.fats }}</div>
+    <div class="col-2">{{ foodItem.macros.carbs }}</div>
+  </div>
+</div>
