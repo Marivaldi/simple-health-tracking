@@ -3,11 +3,11 @@ import { DietDay } from 'src/types/diet-day';
 import { DietService } from 'src/services/diet.service';
 
 @Component({
-  selector: 'app-daily-log',
-  templateUrl: './daily-log.component.html',
-  styleUrls: ['./daily-log.component.scss']
+  selector: 'app-log-history',
+  templateUrl: './log-history.component.html',
+  styleUrls: ['./log-history.component.scss']
 })
-export class DailyLogComponent implements OnInit {
+export class LogHistoryComponent implements OnInit {
   dietDays: DietDay[] = [];
   constructor(private dietService: DietService) { }
 

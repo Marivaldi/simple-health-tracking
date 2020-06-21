@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DailyLogComponent } from './daily-log.component';
+import { LogHistoryComponent } from './log-history.component';
 
 describe('FoodLogTableComponent', () => {
-  let component: DailyLogComponent;
-  let fixture: ComponentFixture<DailyLogComponent>;
+  let component: LogHistoryComponent;
+  let fixture: ComponentFixture<LogHistoryComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DailyLogComponent ]
+      declarations: [ LogHistoryComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DailyLogComponent);
+    fixture = TestBed.createComponent(LogHistoryComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
