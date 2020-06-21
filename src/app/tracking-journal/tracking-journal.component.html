@@ -1,0 +1,21 @@
+<div class="container-fluid pt-3 px-0">
+    <div class="row px-0">
+        <div class="col-12 px-0">
+            <div id="carouselExampleControls" class="carousel slide" data-interval="false" data-touch="true" data-ride="carousel">
+                <div class="carousel-inner">
+                    <div *ngFor="let day of trackingDays; let i = index"class="carousel-item" [class.active]="i === 0">
+                        <app-tracked-day [day]="day"></app-tracked-day>
+                    </div>
+                </div>
+                <a class="carousel-control-prev d-none d-lg-flex" href="#carouselExampleControls" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon text-primary" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next d-none d-lg-flex" href="#carouselExampleControls" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

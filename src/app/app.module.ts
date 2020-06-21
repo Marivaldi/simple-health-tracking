@@ -6,13 +6,19 @@ import { AppComponent } from './app.component';
 import { LogHistoryComponent } from './log-history/log-history.component';
 import { PantryComponent } from './pantry/pantry.component';
 import { FoodItemModalComponent } from './food-item-modal/food-item-modal.component';
+import { TrackingJournalComponent } from './tracking-journal/tracking-journal.component';
+import { TrackedDayComponent } from './tracked-day/tracked-day.component';
+import { TrackModalComponent } from './track-modal/track-modal.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LogHistoryComponent,
     PantryComponent,
-    FoodItemModalComponent
+    FoodItemModalComponent,
+    TrackingJournalComponent,
+    TrackedDayComponent,
+    TrackModalComponent
   ],
   imports: [
     BrowserModule,

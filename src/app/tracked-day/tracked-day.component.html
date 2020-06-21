@@ -1,0 +1,42 @@
+<div class="container px-5">
+    <div class="row">
+        <div class="col-12">
+            <h3>{{ day.date }}</h3>
+            <hr>
+        </div>
+    </div>
+    <div class="row pt-3">
+        <div class="col-12">
+            <h4>Goals</h4>
+        </div>
+        <form class="col-12">
+            <div class="form-row">
+                <div class="form-group col-4">
+                    <label for="protein">Protein:</label>
+                    <input type="number" class="form-control" id="protein" [value]="day.goal.protein"
+                        (input)="changeProteinGoal($event.target.value)" min=0>
+                </div>
+                <div class="form-group col-4">
+                    <label for="carbs">Carbs:</label>
+                    <input type="number" class="form-control" id="carbs" [value]="day.goal.carbs"
+                        (input)="changeCarbGoal($event.target.value)" min=0>
+                </div>
+                <div class="form-group col-4">
+                    <label for="fats">Fats:</label>
+                    <input type="number" class="form-control" id="fats" [value]="day.goal.fats"
+                        (input)="changeFatGoal($event.target.value)" min=0>
+                </div>
+                <div class="form-group col-12">
+                    <label for="protein">Calories:</label>
+                    <input type="number" class="form-control" id="protein" [value]="day.goal.calories" [disabled]="true"
+                        min=0>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="row pt-3">
+        <div class="col-12">
+            <h4>Tracked Food</h4>
+        </div>
+    </div>
+</div>

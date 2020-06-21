@@ -12,7 +12,7 @@ export class LogHistoryComponent implements OnInit {
   constructor(private dietService: DietService) { }
 
   ngOnInit(): void {
-    this.dietDays = this.dietService.load();
+    this.dietDays = this.dietService.loadHistorical();
   }
 
 }

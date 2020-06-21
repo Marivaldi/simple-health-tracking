@@ -1,14 +1,19 @@
 import { Macros } from './macros';
 import { FoodItem } from './food-item';
+import { TrackedFoodItem } from './tracked-food-item';
 
 export class DietDay {
   _date: Date;
-  thingsIAte: FoodItem[] = []
+  thingsIAte: TrackedFoodItem[] = []
   macros: Macros;
+  weight: number;
+  goal: Macros;
   
   constructor() {
     this._date = new Date();
+    this.weight = 0;
     this.macros = new Macros();
+    this.goal = new Macros();
     this.thingsIAte = [];
   }
 
