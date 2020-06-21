@@ -1,0 +1,51 @@
+<div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" #foodItemModal>
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">{{ modalHeader }}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="name" class="col-form-label">Name:</label>
+                        <input id="name" type="text" class="form-control dirty" [value]="name"
+                            (input)="changeName($event.target.value)">
+                    </div>
+                    <div class="form-group">
+                        <label for="name" class="col-form-label">Serving Size (grams):</label>
+                        <input id="name" type="number" class="form-control dirty" [value]="servingSize"
+                            (input)="changeServingSize($event.target.value)" min=0>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-4">
+                            <label for="protein">Protein:</label>
+                            <input type="number" class="form-control" id="protein" [value]="protein"
+                                (input)="changeProtein($event.target.value)" min=0>
+                        </div>
+                        <div class="form-group col-4">
+                            <label for="carbs">Carbs:</label>
+                            <input type="number" class="form-control" id="carbs" [value]="carbs"
+                                (input)="changeCarbs($event.target.value)" min=0>
+                        </div>
+                        <div class="form-group col-4">
+                            <label for="fats">Fats:</label>
+                            <input type="number" class="form-control" id="fats" [value]="fats"
+                                (input)="changeFats($event.target.value)" min=0>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="protein">Calories:</label>
+                        <input type="number" class="form-control" id="protein" [value]="calories" [disabled]="true" min=0>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary px-4" (click)="done()">{{ doneText }}</button>
+            </div>
+        </div>
+    </div>
+</div>

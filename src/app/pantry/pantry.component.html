@@ -1,10 +1,24 @@
 
 <div class="container-fluid">
-  <div *ngFor="let foodItem of foodItems" class="row border">
-    <div class="col-3">{{ foodItem.name }}</div>
-    <div class="col-3">{{ foodItem.macros.calories }}</div>
+  <div class="row pt-2 pb-2">
+    <button type="button" class="btn btn-success" (click)="add()">Add Item</button>
+  </div>
+  <div class="row border font-weight-bold text-center-sm">
+    <div class="col-2 px-0-sm">Name</div>
+    <div class="col-2 px-0-sm">Serving (g)</div>
+    <div class="col-2 px-0-sm">Calories</div>
+    <div class="col-2 px-0-sm">Protein</div>
+    <div class="col-2 px-0-sm">Fats</div>
+    <div class="col-2 px-0-sm">Carbs</div>
+  </div>
+  <div *ngFor="let foodItem of foodItems" class="row data-row border" (click)="edit(foodItem)">
+    <div class="col-2">{{ foodItem.name }}</div>
+    <div class="col-2">{{ foodItem.servingSize}}</div>
+    <div class="col-2">{{ foodItem.macros.calories }}</div>
     <div class="col-2">{{ foodItem.macros.protein }}</div>
     <div class="col-2">{{ foodItem.macros.fats }}</div>
     <div class="col-2">{{ foodItem.macros.carbs }}</div>
   </div>
 </div>
+
+<app-food-item-modal (finishEdit)="saveCurrentFoodItems()" (finishAdd)="addToPantry($event)"></app-food-item-modal>

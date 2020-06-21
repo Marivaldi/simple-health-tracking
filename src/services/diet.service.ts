@@ -24,7 +24,7 @@ export class DietService {
     let exampleDay = new DietDay();
     exampleDay.macros.carbs = 110
     exampleDay.macros.fats = 80;
-    exampleDay.macros.protein = 149;
+    exampleDay.macros.protein = 140;
     return exampleDay;
   }
   
