@@ -19,7 +19,6 @@ export class PantryService {
     if (!json) return [this.example, this.example];
 
     const foodItems: FoodItem[] = JSON.parse(json) as FoodItem[];
-    console.log(foodItems);
     return this.convert(foodItems);
   }
 
