@@ -21,5 +21,10 @@ export class DietDay {
     return `${ this._date.getMonth() + 1 }/${ this._date.getDate() }/${ this._date.getFullYear() }`;
   }
 
+  trackAnItem(trackedFoodItem: TrackedFoodItem) {
+    this.thingsIAte.push(trackedFoodItem);
+    this.macros.add(trackedFoodItem.macros);
+  }
+
   
 }

@@ -6,12 +6,12 @@ export class FoodItem {
   macros: Macros = new Macros();
   servingSize: number = 0;
 
-  // track(amount: number): TrackedFoodItem {
-  //   const trackedItem = Object.assign(new TrackedFoodItem(), this);
-  //   trackedItem.macros = this.getMacrosFor(amount);
-  //   trackedItem.amount = amount;
-  //   return trackedItem;
-  // }
+  track(amount: number): TrackedFoodItem {
+    const trackedItem = Object.assign(new TrackedFoodItem(), this);
+    trackedItem.macros = this.getMacrosFor(amount);
+    trackedItem.amount = amount;
+    return trackedItem;
+  }
 
   getMacrosFor(amount: number) {
     const percentageOfServing: number = amount / this.servingSize;

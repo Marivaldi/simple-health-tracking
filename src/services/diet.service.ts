@@ -63,9 +63,9 @@ export class DietService {
       return this.convert(todayAndAWeekFromToday);
     }
 
-
-    let relevantDays = sortedDays.slice(indexOfToday, (sortedDays.length - 1));
-    if (relevantDays.length !== 7) {
+    const indexOfAWeekFromToday = indexOfToday + 7;
+    let relevantDays = sortedDays.slice(indexOfToday, indexOfAWeekFromToday);
+    if (relevantDays.length < 7) {
       const missingDays = this.seedDaysFromToday(relevantDays.length);
       const updatedDays = sortedDays.concat(missingDays);
       this.save(updatedDays);
@@ -83,7 +83,7 @@ export class DietService {
     dietToday._date = today;
     seededDietDays.push(dietToday);
 
-    for (let i = 1; i <= 7; i++) {
+    for (let i = 1; i < 7; i++) {
       const nextDay = new Date(today);
       nextDay.setDate(today.getDate() + i);
       const nextDietDay: DietDay = new DietDay();
@@ -99,7 +99,7 @@ export class DietService {
     const seededDietDays: DietDay[] = [];
     const today = new Date();
 
-    for (let i = start; i <= 7; i++) {
+    for (let i = start; i < 7; i++) {
       const nextDay = new Date(today);
       nextDay.setDate(today.getDate() + i);
       const nextDietDay: DietDay = new DietDay();

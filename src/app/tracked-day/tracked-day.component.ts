@@ -4,6 +4,7 @@ import { TrackModalComponent } from '../track-modal/track-modal.component';
 import { Macros } from 'src/types/macros';
 import * as _ from 'lodash';
 import { EventEmitter } from '@angular/core';
+import { TrackedFoodItem } from 'src/types/tracked-food-item';
 
 @Component({
   selector: 'app-tracked-day',
@@ -57,6 +58,11 @@ export class TrackedDayComponent implements OnInit {
     this.day.goal = Object.assign(new Macros(), this.originalGoal);
     this.day.weight = this.originalWeight;
     this.checkIfChangesArePresent();
+  }
+
+  add(trackedFoodItem: TrackedFoodItem) {
+    this.day.trackAnItem(trackedFoodItem);
+    this.saveCurrent.emit();
   }
 
   private checkIfChangesArePresent() {

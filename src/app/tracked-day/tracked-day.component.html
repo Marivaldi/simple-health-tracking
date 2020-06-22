@@ -1,17 +1,17 @@
-<div class="container px-5">
+<div class="container px-4 pb-3">
     <div class="row">
         <div class="col-12">
             <h3>{{ day.date }}</h3>
+            <button *ngIf="changesArePresent" type="button" class="btn-sm btn-success float-right px-3 ml-3"
+                (click)="saveChanges()">Save</button>
+            <button *ngIf="changesArePresent" type="button" class="btn-sm btn-secondary float-right px-3"
+                (click)="resetChanges()">Reset</button>
             <hr>
         </div>
-        <div *ngIf="changesArePresent" class="col-12">
-            <button type="button" class="btn-sm btn-success float-right px-3 ml-3" (click)="saveChanges()">Save</button>
-            <button type="button" class="btn-sm btn-secondary float-right px-3" (click)="resetChanges()">Reset</button>
-        </div>
     </div>
-    <div class="row pt-3">
+    <div class="row pt-3 pb-3">
         <div class="col-12">
-            <h4>Goals</h4>
+            <h5>Goals</h5>
         </div>
         <form class="col-12">
             <div class="form-row">
@@ -31,15 +31,35 @@
                         (input)="changeFatGoal($event.target.value)" min=0>
                 </div>
                 <div class="form-group col-12">
-                    <label >Calories:</label>
-                    <input type="number" class="form-control"  [value]="day.goal.calories" [disabled]="true">
+                    <label>Calories:</label>
+                    <input type="number" class="form-control" [value]="day.goal.calories" [disabled]="true">
                 </div>
             </div>
         </form>
     </div>
-    <div class="row pt-3">
+    <div class="row border font-weight-bold text-center-sm">
+        <div class="col-3 px-0-sm" [class.text-primary]="day.macros.protein < day.goal.protein"
+            [class.text-success]="day.macros.protein === day.goal.protein"
+            [class.text-danger]="day.macros.protein > day.goal.protein">Protein</div>
+        <div class="col-3 px-0-sm" [class.text-primary]="day.macros.carbs < day.goal.carbs"
+        [class.text-success]="day.macros.carbs === day.goal.carbs"
+        [class.text-danger]="day.macros.carbs > day.goal.carbs">Carbs</div>
+        <div class="col-3 px-0-sm" [class.text-primary]="day.macros.fats < day.goal.fats"
+        [class.text-success]="day.macros.fats === day.goal.fats"
+        [class.text-danger]="day.macros.fats > day.goal.fats">Fats</div>
+        <div class="col-3 px-0-sm" [class.text-primary]="day.macros.calories < day.goal.calories"
+        [class.text-success]="day.macros.calories === day.goal.calories"
+        [class.text-danger]="day.macros.calories > day.goal.calories">Calories</div>
+    </div>
+    <div class="row data-row border">
+        <div class="col-3">{{ day.macros.protein }}</div>
+        <div class="col-3">{{ day.macros.carbs }}</div>
+        <div class="col-3">{{ day.macros.fats }}</div>
+        <div class="col-3">{{ day.macros.calories }}</div>
+    </div>
+    <div class="row pt-5">
         <div class="col-12">
-            <h4>Morning Weight</h4>
+            <h5>Morning Weight</h5>
         </div>
         <div class="col-12">
             <div class="form-row">
@@ -53,12 +73,30 @@
     </div>
     <div class="row pt-3">
         <div class="col-12">
-            <h4>Tracked Food</h4>
+            <h5>Tracked Food</h5>
         </div>
+    </div>
+    <div class="row pt-4 pb-4">
         <div class="col-12">
             <button type="button" class="btn btn-success" (click)="openTrackingModal()">Track New Item</button>
         </div>
     </div>
+    <div class="row border font-weight-bold text-center-sm">
+        <div class="col-2 px-0-sm">Name</div>
+        <div class="col-2 px-0-sm">Amount</div>
+        <div class="col-2 px-0-sm">Calories</div>
+        <div class="col-2 px-0-sm">Protein</div>
+        <div class="col-2 px-0-sm">Fats</div>
+        <div class="col-2 px-0-sm">Carbs</div>
+    </div>
+    <div *ngFor="let foodItem of day.thingsIAte" class="row data-row border">
+        <div class="col-2">{{ foodItem.name }}</div>
+        <div class="col-2">{{ foodItem.amount}}</div>
+        <div class="col-2">{{ foodItem.macros.calories }}</div>
+        <div class="col-2">{{ foodItem.macros.protein }}</div>
+        <div class="col-2">{{ foodItem.macros.fats }}</div>
+        <div class="col-2">{{ foodItem.macros.carbs }}</div>
+    </div>
 </div>
 
-<app-track-modal></app-track-modal>
+<app-track-modal (finishTrackingItem)="add($event)"></app-track-modal>

@@ -1,7 +1,8 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
 import { FoodItem } from 'src/types/food-item';
 import { PantryService } from 'src/services/pantry.service';
 import { Macros } from 'src/types/macros';
+import { TrackedFoodItem } from 'src/types/tracked-food-item';
 
 @Component({
   selector: 'app-track-modal',
@@ -9,6 +10,7 @@ import { Macros } from 'src/types/macros';
   styleUrls: ['./track-modal.component.scss']
 })
 export class TrackModalComponent implements OnInit {
+  @Output() finishTrackingItem: EventEmitter<TrackedFoodItem> = new EventEmitter<TrackedFoodItem>();
   @ViewChild("trackingModal") modal;
   pantryOptions: FoodItem[] = [];
   selectedPantryIndex: number = 0;
@@ -27,6 +29,9 @@ export class TrackModalComponent implements OnInit {
   }
 
   done() {
+    const selectedFoodItem : FoodItem = this.pantryOptions[this.selectedPantryIndex];
+    const trackedFoodItem : TrackedFoodItem = selectedFoodItem.track(this.amount);
+    this.finishTrackingItem.emit(trackedFoodItem);
     $(this.modal.nativeElement).modal("hide");
   }
 
