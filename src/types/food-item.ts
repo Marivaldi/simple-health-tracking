@@ -13,7 +13,7 @@ export class FoodItem {
   //   return trackedItem;
   // }
 
-  private getMacrosFor(amount: number) {
+  getMacrosFor(amount: number) {
     const percentageOfServing: number = amount / this.servingSize;
     const actual = new Macros();
     actual.protein = this.round(this.macros.protein * percentageOfServing);

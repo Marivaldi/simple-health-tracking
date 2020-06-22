@@ -21,24 +21,24 @@
                     </div>
                     <div class="form-row">
                         <div class="form-group col-4">
-                            <label for="protein">Protein:</label>
-                            <input type="number" class="form-control" id="protein" [value]="protein"
+                            <label>Protein:</label>
+                            <input type="number" class="form-control" [value]="protein"
                                 (input)="changeProtein($event.target.value)" min=0>
                         </div>
                         <div class="form-group col-4">
-                            <label for="carbs">Carbs:</label>
-                            <input type="number" class="form-control" id="carbs" [value]="carbs"
+                            <label>Carbs:</label>
+                            <input type="number" class="form-control" [value]="carbs"
                                 (input)="changeCarbs($event.target.value)" min=0>
                         </div>
                         <div class="form-group col-4">
-                            <label for="fats">Fats:</label>
-                            <input type="number" class="form-control" id="fats" [value]="fats"
+                            <label>Fats:</label>
+                            <input type="number" class="form-control" [value]="fats"
                                 (input)="changeFats($event.target.value)" min=0>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="protein">Calories:</label>
-                        <input type="number" class="form-control" id="protein" [value]="calories" [disabled]="true" min=0>
+                        <label>Calories:</label>
+                        <input type="number" class="form-control" [value]="calories" [disabled]="true">
                     </div>
                 </form>
             </div>

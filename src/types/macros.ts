@@ -14,6 +14,10 @@ export class Macros {
     const calories_from_carbs = carbs * Macros.CALORIES_PER_GRAM_OF_CARB;
     const calories_from_fats = fats * Macros.CALORIES_PER_GRAM_OF_FAT;
     const calories_from_protein = protein * Macros.CALORIES_PER_GRAM_OF_PROTEIN;
-    return calories_from_carbs + calories_from_fats + calories_from_protein;
+    return Macros.round(calories_from_carbs + calories_from_fats + calories_from_protein);
+  }
+
+  private static round(num: number) {
+    return Math.round((num + Number.EPSILON) * 100) / 100;
   }
 }

@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FoodItem } from 'src/types/food-item';
+import { PantryService } from 'src/services/pantry.service';
+import { Macros } from 'src/types/macros';
 
 @Component({
   selector: 'app-track-modal',
@@ -6,10 +9,40 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./track-modal.component.scss']
 })
 export class TrackModalComponent implements OnInit {
-
-  constructor() { }
+  @ViewChild("trackingModal") modal;
+  pantryOptions: FoodItem[] = [];
+  selectedPantryIndex: number = 0;
+  amount: number = 0;
+  macros: Macros = new Macros();
+  constructor(private pantryService: PantryService) { }
 
   ngOnInit(): void {
+    this.pantryOptions = this.pantryService.load();
+    this.selectPantryOption(0);
+    $('.carousel').carousel({touch: true});
+  }
+
+  beginTrackingItem() {
+    $(this.modal.nativeElement).modal("show");
+  }
+
+  done() {
+    $(this.modal.nativeElement).modal("hide");
+  }
+
+  selectPantryOption(index: number) {
+    this.selectedPantryIndex = index;
+    this.amount = this.pantryOptions[this.selectedPantryIndex].servingSize;
+    this.setMacrosForAmount()
+  }
+
+  changeAmount(amount: number) {
+    this.amount = amount;
+    this.setMacrosForAmount();
+  }
+
+  setMacrosForAmount() {
+    this.macros = this.pantryOptions[this.selectedPantryIndex].getMacrosFor(this.amount);
   }
 
 }

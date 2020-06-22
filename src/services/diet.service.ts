@@ -12,13 +12,28 @@ export class DietService {
   constructor() {
     const existingDays: DietDay[] = this.load();
     if (!existingDays || existingDays.length === 0) {
-      this.seedDays();
+      this.save(this.seedDays());
     }
 
   }
 
   save(dietDays: DietDay[]): void {
     localStorage.setItem(this.data_key, JSON.stringify(dietDays));
+  }
+
+  saveTrackedDays(trackedDays: DietDay[]) {
+    const allDays: DietDay[] = this.load();
+    const sortedDays = allDays.slice().sort((a, b) => a._date.getTime() - b._date.getTime());
+    const updatedDays = sortedDays.map((day) => {
+      const indexOfTrackedDay = trackedDays.findIndex((trackedDay) => this.daysAreEqual(day, trackedDay));
+      if (indexOfTrackedDay !== -1) {
+        return Object.assign(new DietDay(), trackedDays[indexOfTrackedDay]);
+      }
+
+      return day;
+    });
+
+    this.save(updatedDays);
   }
 
   load(): DietDay[] {
@@ -41,20 +56,28 @@ export class DietService {
     const allDays: DietDay[] = this.load();
     const sortedDays = allDays.slice().sort((a, b) => a._date.getTime() - b._date.getTime());
     const indexOfToday: number = sortedDays.findIndex((day: DietDay) => this.isToday(day));
-    const relevantDays = sortedDays.slice(indexOfToday - 1, (sortedDays.length - 1));
+    if (indexOfToday === -1) {
+      const todayAndAWeekFromToday = this.seedDays();
+      const updatedDays = sortedDays.concat(todayAndAWeekFromToday);
+      this.save(updatedDays);
+      return this.convert(todayAndAWeekFromToday);
+    }
+
+
+    let relevantDays = sortedDays.slice(indexOfToday, (sortedDays.length - 1));
+    if (relevantDays.length !== 7) {
+      const missingDays = this.seedDaysFromToday(relevantDays.length);
+      const updatedDays = sortedDays.concat(missingDays);
+      this.save(updatedDays);
+      relevantDays = relevantDays.concat(missingDays);
+    }
+
     return this.convert(relevantDays);
   }
 
-  private seedDays() {
+  private seedDays(): DietDay[] {
     const seededDietDays: DietDay[] = [];
     const today = new Date();
-
-    const yesterday = new Date(today);
-    yesterday.setDate(today.getDate() - 1);
-    const dietYesterday: DietDay = new DietDay();
-    dietYesterday._date = yesterday;
-    seededDietDays.push(dietYesterday);
-
 
     const dietToday: DietDay = new DietDay();
     dietToday._date = today;
@@ -69,9 +92,23 @@ export class DietService {
     }
 
 
-    this.save(seededDietDays);
+    return seededDietDays;
   }
 
+  private seedDaysFromToday(start: number) {
+    const seededDietDays: DietDay[] = [];
+    const today = new Date();
+
+    for (let i = start; i <= 7; i++) {
+      const nextDay = new Date(today);
+      nextDay.setDate(today.getDate() + i);
+      const nextDietDay: DietDay = new DietDay();
+      nextDietDay._date = nextDay;
+      seededDietDays.push(nextDietDay);
+    }
+
+    return seededDietDays;
+  }
 
 
   private convert(dietDays: DietDay[]) {
@@ -98,5 +135,12 @@ export class DietService {
     return day._date.getDate() == today.getDate() &&
       day._date.getMonth() == today.getMonth() &&
       day._date.getFullYear() == today.getFullYear()
+  }
+
+  private daysAreEqual(dayOne: DietDay, dayTwo: DietDay) {
+    const areEqual = dayOne._date.getDate() == dayTwo._date.getDate() &&
+      dayOne._date.getMonth() == dayTwo._date.getMonth() &&
+      dayOne._date.getFullYear() == dayTwo._date.getFullYear();
+    return areEqual;
   }
 }

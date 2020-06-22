@@ -1,1 +1,52 @@
-<p>track-modal works!</p>
+<div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" #trackingModal>
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Track New Item</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label>Food Item</label>
+                        <select class="form-control" (change)="selectPantryOption($event.target.value)">
+                          <option *ngFor="let pantryOption of pantryOptions; let i = index;" [value]="i" [selected]="i === selectedPantryIndex">
+                              {{ pantryOption.name }}
+                          </option>
+                        </select>
+                      </div>
+
+                      <div class="form-row">
+                        <div class="form-group col-12">
+                            <label>How much are you eating? (grams, ounces, pieces)</label>
+                            <input type="number" class="form-control" [value]="amount"
+                                (input)="changeAmount($event.target.value)" min=0>
+                        </div>
+                        <div class="form-group col-4">
+                            <label>Protein:</label>
+                            <input type="number" class="form-control" [value]="macros.protein" [disabled]="true">
+                        </div>
+                        <div class="form-group col-4">
+                            <label>Carbs:</label>
+                            <input type="number" class="form-control" [value]="macros.carbs" [disabled]="true">
+                        </div>
+                        <div class="form-group col-4">
+                            <label>Fats:</label>
+                            <input type="number" class="form-control" [value]="macros.fats" [disabled]="true">
+                        </div>
+                        <div class="form-group col-12">
+                            <label>Calories:</label>
+                            <input type="number" class="form-control" [value]="macros.calories" [disabled]="true">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary px-4" (click)="done()">Track</button>
+            </div>
+        </div>
+    </div>
+</div>
