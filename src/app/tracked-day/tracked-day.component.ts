@@ -5,6 +5,7 @@ import { Macros } from 'src/types/macros';
 import * as _ from 'lodash';
 import { EventEmitter } from '@angular/core';
 import { TrackedFoodItem } from 'src/types/tracked-food-item';
+import { FoodItem } from 'src/types/food-item';
 
 @Component({
   selector: 'app-tracked-day',
@@ -13,6 +14,7 @@ import { TrackedFoodItem } from 'src/types/tracked-food-item';
 })
 export class TrackedDayComponent implements OnInit {
   @Input() day: DietDay;
+  @Input() pantryOptions: FoodItem[];
   @Output() saveCurrent = new EventEmitter();
   @ViewChild(TrackModalComponent) trackingModal: TrackModalComponent;
   originalGoal: Macros = new Macros();

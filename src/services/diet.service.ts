@@ -2,77 +2,88 @@ import { Injectable } from '@angular/core';
 import { DietDay } from 'src/types/diet-day';
 import { Macros } from 'src/types/macros';
 import { TrackedFoodItem } from 'src/types/tracked-food-item';
+import { AuthorizationService } from './authorization.service';
+import { Observable, throwError } from 'rxjs';
+import { HttpHeaders, HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { map, catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DietService {
   private readonly data_key: string = "super_fun_diet_stuff";
+  private readonly health_tracking_url: string = "https://72mtzp9aq7.execute-api.us-east-1.amazonaws.com/dev/healthtracking";
 
-  constructor() {
-    const existingDays: DietDay[] = this.load();
-    if (!existingDays || existingDays.length === 0) {
-      this.save(this.seedDays());
-    }
+  constructor(private http: HttpClient, private authorizationService: AuthorizationService) { }
 
-  }
-
-  save(dietDays: DietDay[]): void {
-    localStorage.setItem(this.data_key, JSON.stringify(dietDays));
+  save(dietDays: DietDay[]): Observable<DietDay[]> {
+    const requestOptions = {
+      headers: new HttpHeaders(this.headerDict), 
+    };
+    return this.http.post<DietDay[]>(this.health_tracking_url, dietDays,  requestOptions);
   }
 
   saveTrackedDays(trackedDays: DietDay[]) {
-    const allDays: DietDay[] = this.load();
-    const sortedDays = allDays.slice().sort((a, b) => a._date.getTime() - b._date.getTime());
-    const updatedDays = sortedDays.map((day) => {
-      const indexOfTrackedDay = trackedDays.findIndex((trackedDay) => this.daysAreEqual(day, trackedDay));
-      if (indexOfTrackedDay !== -1) {
-        return Object.assign(new DietDay(), trackedDays[indexOfTrackedDay]);
-      }
+    this.load().subscribe((allDays) => {
+      const sortedDays = allDays.slice().sort((a, b) => a._date.getTime() - b._date.getTime());
+      const updatedDays = sortedDays.map((day) => {
+        const indexOfTrackedDay = trackedDays.findIndex((trackedDay) => this.daysAreEqual(day, trackedDay));
+        if (indexOfTrackedDay !== -1) {
+          return Object.assign(new DietDay(), trackedDays[indexOfTrackedDay]);
+        }
 
-      return day;
+        return day;
+      });
+
+      this.save(updatedDays).pipe(catchError(this.handleError)).subscribe();
     });
 
-    this.save(updatedDays);
   }
 
-  load(): DietDay[] {
-    const json: string = localStorage.getItem(this.data_key);
-    if (!json) return [];
-
-    const dietDays = JSON.parse(json) as DietDay[];
-    return this.convert(dietDays);
+  load(): Observable<DietDay[]> {
+    const requestOptions = {
+      headers: new HttpHeaders(this.headerDict),
+    };
+    return this.http.get<DietDay[]>(this.health_tracking_url, requestOptions).pipe(map((value: DietDay[]) => this.convert(value)));
   }
 
-  loadHistorical(): DietDay[] {
-    const allDays: DietDay[] = this.load();
-    const sortedDays = allDays.slice().sort((a, b) => a._date.getTime() - b._date.getTime());
-    const indexOfToday: number = sortedDays.findIndex((day: DietDay) => this.isToday(day));
-    const relevantDays = sortedDays.slice(0, indexOfToday);
-    return this.convert(relevantDays);
+  loadHistorical(): Observable<DietDay[]> {
+    return this.load().pipe(
+      map((allDays) => {
+        const sortedDays = allDays.slice().sort((a, b) => a._date.getTime() - b._date.getTime());
+        const indexOfToday: number = sortedDays.findIndex((day: DietDay) => this.isToday(day));
+        const relevantDays = sortedDays.slice(0, indexOfToday);
+        return this.convert(relevantDays);
+      })
+    );
+
   }
 
-  loadForTracking(): DietDay[] {
-    const allDays: DietDay[] = this.load();
-    const sortedDays = allDays.slice().sort((a, b) => a._date.getTime() - b._date.getTime());
-    const indexOfToday: number = sortedDays.findIndex((day: DietDay) => this.isToday(day));
-    if (indexOfToday === -1) {
-      const todayAndAWeekFromToday = this.seedDays();
-      const updatedDays = sortedDays.concat(todayAndAWeekFromToday);
-      this.save(updatedDays);
-      return this.convert(todayAndAWeekFromToday);
-    }
+  loadForTracking(): Observable<DietDay[]> {
+    return this.load().pipe(
+      map((allDays) => {
+        const sortedDays = allDays.slice().sort((a, b) => a._date.getTime() - b._date.getTime());
+        const indexOfToday: number = sortedDays.findIndex((day: DietDay) => this.isToday(day));
+        if (indexOfToday === -1) {
+          const todayAndAWeekFromToday = this.seedDays();
+          const updatedDays = sortedDays.concat(todayAndAWeekFromToday);
+          this.save(updatedDays).pipe(catchError(this.handleError)).subscribe();
+          return this.convert(todayAndAWeekFromToday);
+        }
 
-    const indexOfAWeekFromToday = indexOfToday + 7;
-    let relevantDays = sortedDays.slice(indexOfToday, indexOfAWeekFromToday);
-    if (relevantDays.length < 7) {
-      const missingDays = this.seedDaysFromToday(relevantDays.length);
-      const updatedDays = sortedDays.concat(missingDays);
-      this.save(updatedDays);
-      relevantDays = relevantDays.concat(missingDays);
-    }
+        const indexOfAWeekFromToday = indexOfToday + 7;
+        let relevantDays = sortedDays.slice(indexOfToday, indexOfAWeekFromToday);
+        if (relevantDays.length < 7) {
+          const missingDays = this.seedDaysFromToday(relevantDays.length);
+          const updatedDays = sortedDays.concat(missingDays);
+          this.save(updatedDays).pipe(catchError(this.handleError)).subscribe();
+          relevantDays = relevantDays.concat(missingDays);
+        }
 
-    return this.convert(relevantDays);
+        return this.convert(relevantDays);
+      })
+    )
+
   }
 
   private seedDays(): DietDay[] {
@@ -142,5 +153,24 @@ export class DietService {
       dayOne._date.getMonth() == dayTwo._date.getMonth() &&
       dayOne._date.getFullYear() == dayTwo._date.getFullYear();
     return areEqual;
+  }
+
+  private get headerDict() {
+    return {
+      'Content-Type': 'application/json',
+      Authorization: this.authorizationService.getToken(),
+    }
+  }
+  
+  private handleError(error: HttpErrorResponse) {
+    if (error.error instanceof ErrorEvent) {
+      console.error('An error occurred:', error.error.message);
+    } else {
+      console.error(
+        `Backend returned code ${error.status}, ` +
+        `body was: ${error.error}`);
+    }
+    return throwError(
+      'Something bad happened; please try again later.');
   }
 }

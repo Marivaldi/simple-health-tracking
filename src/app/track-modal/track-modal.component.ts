@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ViewChild, Output, EventEmitter, Input } from '@angular/core';
 import { FoodItem } from 'src/types/food-item';
 import { PantryService } from 'src/services/pantry.service';
 import { Macros } from 'src/types/macros';
@@ -12,22 +12,19 @@ import { TrackedFoodItem } from 'src/types/tracked-food-item';
 export class TrackModalComponent implements OnInit {
   @Output() finishTrackingItem: EventEmitter<TrackedFoodItem> = new EventEmitter<TrackedFoodItem>();
   @ViewChild("trackingModal") modal;
-  pantryOptions: FoodItem[] = [];
+  @Input() _pantryOptions: FoodItem[] = [];
+  @Input() set pantryOptions(options: FoodItem[]) {
+    this._pantryOptions = options;
+    this.selectPantryOption(0);
+  }
   selectedPantryIndex: number = 0;
   amount: number = 0;
   macros: Macros = new Macros();
   constructor(private pantryService: PantryService) { }
 
   ngOnInit(): void {
-    this.fetchPantryOptions();
-    $('.carousel').carousel({touch: true});
-  }
-
-  fetchPantryOptions() {
-    this.pantryService.load().subscribe((foodItems: FoodItem[]) => {
-      this.pantryOptions = foodItems;
-      this.selectPantryOption(0);
-    });
+    this.selectPantryOption(0);
+    $('.carousel').carousel({ touch: true });
   }
 
   beginTrackingItem() {
@@ -35,15 +32,15 @@ export class TrackModalComponent implements OnInit {
   }
 
   done() {
-    const selectedFoodItem : FoodItem = this.pantryOptions[this.selectedPantryIndex];
-    const trackedFoodItem : TrackedFoodItem = selectedFoodItem.track(this.amount);
+    const selectedFoodItem: FoodItem = this.pantryOptions[this.selectedPantryIndex];
+    const trackedFoodItem: TrackedFoodItem = selectedFoodItem.track(this.amount);
     this.finishTrackingItem.emit(trackedFoodItem);
     $(this.modal.nativeElement).modal("hide");
   }
 
   selectPantryOption(index: number) {
     this.selectedPantryIndex = index;
-    this.amount = this.pantryOptions[this.selectedPantryIndex].servingSize;
+    this.amount = this._pantryOptions[this.selectedPantryIndex].servingSize;
     this.setMacrosForAmount()
   }
 
@@ -53,7 +50,7 @@ export class TrackModalComponent implements OnInit {
   }
 
   setMacrosForAmount() {
-    this.macros = this.pantryOptions[this.selectedPantryIndex].getMacrosFor(this.amount);
+    this.macros = this._pantryOptions[this.selectedPantryIndex].getMacrosFor(this.amount);
   }
 
 }
