@@ -19,9 +19,15 @@ export class TrackModalComponent implements OnInit {
   constructor(private pantryService: PantryService) { }
 
   ngOnInit(): void {
-    this.pantryOptions = this.pantryService.load();
-    this.selectPantryOption(0);
+    this.fetchPantryOptions();
     $('.carousel').carousel({touch: true});
+  }
+
+  fetchPantryOptions() {
+    this.pantryService.load().subscribe((foodItems: FoodItem[]) => {
+      this.pantryOptions = foodItems;
+      this.selectPantryOption(0);
+    });
   }
 
   beginTrackingItem() {

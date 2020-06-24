@@ -9,6 +9,11 @@ import { FoodItemModalComponent } from './food-item-modal/food-item-modal.compon
 import { TrackingJournalComponent } from './tracking-journal/tracking-journal.component';
 import { TrackedDayComponent } from './tracked-day/tracked-day.component';
 import { TrackModalComponent } from './track-modal/track-modal.component';
+import { HttpClientModule } from '@angular/common/http';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
+import { FormsModule } from '@angular/forms';
+import { NavigationComponent } from './navigation/navigation.component';
 
 @NgModule({
   declarations: [
@@ -18,11 +23,16 @@ import { TrackModalComponent } from './track-modal/track-modal.component';
     FoodItemModalComponent,
     TrackingJournalComponent,
     TrackedDayComponent,
-    TrackModalComponent
+    TrackModalComponent,
+    LoginComponent,
+    RegisterComponent,
+    NavigationComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
