@@ -7,6 +7,7 @@ import { EventEmitter } from '@angular/core';
 import { TrackedFoodItem } from 'src/types/tracked-food-item';
 import { FoodItem } from 'src/types/food-item';
 import { MealTime } from 'src/types/enums/meal-time.enum';
+import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-tracked-day',
@@ -75,6 +76,18 @@ export class TrackedDayComponent implements OnInit {
 
   edit(trackedFoodItem: TrackedFoodItem) {
     console.log(trackedFoodItem);
+  }
+
+  drop(event: CdkDragDrop<FoodItem[]>) {
+    if (event.previousContainer === event.container) {
+      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+    } else {
+      transferArrayItem(event.previousContainer.data,
+                        event.container.data,
+                        event.previousIndex,
+                        event.currentIndex);
+    }
+    this.saveCurrent.emit();
   }
 
   private checkIfChangesArePresent() {

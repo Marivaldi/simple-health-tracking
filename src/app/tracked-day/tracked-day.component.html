@@ -78,7 +78,8 @@
     </div>
     <div class="row pt-4 pb-3">
         <div class="col-12">
-            <button type="button" class="btn btn-success w-100 shadow" (click)="openTrackingModal()">Track New Item</button>
+            <button type="button" class="btn btn-success w-100 shadow" (click)="openTrackingModal()">Track New
+                Item</button>
         </div>
     </div>
     <div class="row border-left border-right border-top mt-5 pt-2 pb-2 bg-dark text-light rounded-top">
@@ -94,18 +95,20 @@
         <div class="col-2 px-0-sm">Fats</div>
         <div class="col-2 px-0-sm">Carbs</div>
     </div>
-    <div *ngFor="let foodItem of day.thingsIAte.forBreakfast" class="row pt-3">
-        <div class="col-2">{{ foodItem.name }}</div>
-        <div class="col-2">{{ foodItem.amount}}</div>
-        <div class="col-2">{{ foodItem.macros.calories }}</div>
-        <div class="col-2">{{ foodItem.macros.protein }}</div>
-        <div class="col-2">{{ foodItem.macros.fats }}</div>
-        <div class="col-2">{{ foodItem.macros.carbs }}</div>
-        <div class="col-12">
-            <button type="button" class="btn btn-link text-danger float-right"
-                (click)="remove(foodItem, 'Breakfast')">Delete</button>
-            <button type="button" class="btn btn-link float-right"
-                (click)="edit(foodItem)">Edit</button>
+    <div cdkDropList #todoList="cdkDropList" [cdkDropListData]="day.thingsIAte.forBreakfast"
+        [cdkDropListConnectedTo]="[doneList]" (cdkDropListDropped)="drop($event)">
+        <div *ngFor="let foodItem of day.thingsIAte.forBreakfast" class="row pt-3" cdkDrag>
+            <div class="col-2">{{ foodItem.name }}</div>
+            <div class="col-2">{{ foodItem.amount}}</div>
+            <div class="col-2">{{ foodItem.macros.calories }}</div>
+            <div class="col-2">{{ foodItem.macros.protein }}</div>
+            <div class="col-2">{{ foodItem.macros.fats }}</div>
+            <div class="col-2">{{ foodItem.macros.carbs }}</div>
+            <div class="col-12">
+                <button type="button" class="btn btn-link text-danger float-right"
+                    (click)="remove(foodItem, 'Breakfast')">Delete</button>
+                <button type="button" class="btn btn-link float-right" (click)="edit(foodItem)">Edit</button>
+            </div>
         </div>
     </div>
     <div class="row border-left border-right border-top mt-5 pt-2 pb-2 bg-dark text-light rounded-top">
@@ -121,18 +124,20 @@
         <div class="col-2 px-0-sm">Fats</div>
         <div class="col-2 px-0-sm">Carbs</div>
     </div>
-    <div *ngFor="let foodItem of day.thingsIAte.asAMorningSnack" class="row pt-3">
-        <div class="col-2">{{ foodItem.name }}</div>
-        <div class="col-2">{{ foodItem.amount}}</div>
-        <div class="col-2">{{ foodItem.macros.calories }}</div>
-        <div class="col-2">{{ foodItem.macros.protein }}</div>
-        <div class="col-2">{{ foodItem.macros.fats }}</div>
-        <div class="col-2">{{ foodItem.macros.carbs }}</div>
-        <div class="col-12">
-            <button type="button" class="btn btn-link text-danger float-right"
-                (click)="remove(foodItem, 'MorningSnack')">Delete</button>
-            <button type="button" class="btn btn-link float-right"
-                (click)="edit(foodItem)">Edit</button>
+    <div cdkDropList #doneList="cdkDropList" [cdkDropListData]="day.thingsIAte.asAMorningSnack"
+        [cdkDropListConnectedTo]="[todoList]" (cdkDropListDropped)="drop($event)">
+        <div *ngFor="let foodItem of day.thingsIAte.asAMorningSnack" class="row pt-3" cdkDrag>
+            <div class="col-2">{{ foodItem.name }}</div>
+            <div class="col-2">{{ foodItem.amount}}</div>
+            <div class="col-2">{{ foodItem.macros.calories }}</div>
+            <div class="col-2">{{ foodItem.macros.protein }}</div>
+            <div class="col-2">{{ foodItem.macros.fats }}</div>
+            <div class="col-2">{{ foodItem.macros.carbs }}</div>
+            <div class="col-12">
+                <button type="button" class="btn btn-link text-danger float-right"
+                    (click)="remove(foodItem, 'MorningSnack')">Delete</button>
+                <button type="button" class="btn btn-link float-right" (click)="edit(foodItem)">Edit</button>
+            </div>
         </div>
     </div>
     <div class="row border-left border-right border-top mt-5 pt-2 pb-2 bg-dark text-light rounded-top">
@@ -158,8 +163,7 @@
         <div class="col-12">
             <button type="button" class="btn btn-link text-danger float-right"
                 (click)="remove(foodItem, 'Lunch')">Delete</button>
-            <button type="button" class="btn btn-link float-right"
-                (click)="edit(foodItem)">Edit</button>
+            <button type="button" class="btn btn-link float-right" (click)="edit(foodItem)">Edit</button>
         </div>
     </div>
     <div class="row border-left border-right border-top mt-5 pt-2 pb-2 bg-dark text-light rounded-top">
@@ -185,8 +189,7 @@
         <div class="col-12">
             <button type="button" class="btn btn-link text-danger float-right"
                 (click)="remove(foodItem, 'AfternoonSnack')">Delete</button>
-            <button type="button" class="btn btn-link float-right"
-                (click)="edit(foodItem)">Edit</button>
+            <button type="button" class="btn btn-link float-right" (click)="edit(foodItem)">Edit</button>
         </div>
     </div>
     <div class="row border-left border-right border-top mt-5 pt-2 pb-2 bg-dark text-light rounded-top">
@@ -212,8 +215,7 @@
         <div class="col-12">
             <button type="button" class="btn btn-link text-danger float-right"
                 (click)="remove(foodItem, 'Dinner')">Delete</button>
-            <button type="button" class="btn btn-link float-right"
-                (click)="edit(foodItem)">Edit</button>
+            <button type="button" class="btn btn-link float-right" (click)="edit(foodItem)">Edit</button>
         </div>
     </div>
     <div class="row border-left border-right border-top mt-5 pt-2 pb-2 bg-dark text-light rounded-top">
@@ -239,8 +241,7 @@
         <div class="col-12">
             <button type="button" class="btn btn-link text-danger float-right"
                 (click)="remove(foodItem, 'Dessert')">Delete</button>
-            <button type="button" class="btn btn-link float-right"
-                (click)="edit(foodItem)">Edit</button>
+            <button type="button" class="btn btn-link float-right" (click)="edit(foodItem)">Edit</button>
         </div>
     </div>
 
