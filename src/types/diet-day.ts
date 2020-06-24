@@ -8,7 +8,7 @@ export class DietDay {
   macros: Macros;
   weight: number;
   goal: Macros;
-  
+
   constructor() {
     this._date = new Date();
     this.weight = 0;
@@ -26,5 +26,9 @@ export class DietDay {
     this.macros.add(trackedFoodItem.macros);
   }
 
-  
+  removeATrackedItem(trackedFoodItem: TrackedFoodItem) {
+    this.thingsIAte = this.thingsIAte.filter((item: TrackedFoodItem) => item != trackedFoodItem);
+    this.macros.remove(trackedFoodItem.macros);
+  }
+
 }

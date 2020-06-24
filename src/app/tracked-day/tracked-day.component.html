@@ -89,13 +89,16 @@
         <div class="col-2 px-0-sm">Fats</div>
         <div class="col-2 px-0-sm">Carbs</div>
     </div>
-    <div *ngFor="let foodItem of day.thingsIAte" class="row data-row border">
+    <div *ngFor="let foodItem of day.thingsIAte" class="row border">
         <div class="col-2">{{ foodItem.name }}</div>
         <div class="col-2">{{ foodItem.amount}}</div>
         <div class="col-2">{{ foodItem.macros.calories }}</div>
         <div class="col-2">{{ foodItem.macros.protein }}</div>
         <div class="col-2">{{ foodItem.macros.fats }}</div>
         <div class="col-2">{{ foodItem.macros.carbs }}</div>
+        <div class="col-12">
+            <button type="button" class="btn btn-link text-danger float-right" (click)="remove(foodItem)">Delete</button>
+        </div>
     </div>
 </div>
 

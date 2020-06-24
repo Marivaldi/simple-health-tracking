@@ -16,6 +16,12 @@ export class Macros {
     this.fats += macros.fats;
   }
 
+  remove(macros: Macros) {
+    this.protein -= macros.protein;
+    this.carbs -= macros.carbs;
+    this.fats -= macros.fats;
+  }
+
   static calculateCalories (protein: number, carbs: number, fats: number): number {
     const calories_from_carbs = carbs * Macros.CALORIES_PER_GRAM_OF_CARB;
     const calories_from_fats = fats * Macros.CALORIES_PER_GRAM_OF_FAT;

@@ -67,6 +67,11 @@ export class TrackedDayComponent implements OnInit {
     this.saveCurrent.emit();
   }
 
+  remove(trackedFoodItem: TrackedFoodItem) {
+    this.day.removeATrackedItem(trackedFoodItem);
+    this.saveCurrent.emit();
+  }
+
   private checkIfChangesArePresent() {
     const goalsHaveChanged = !_.isEqual(this.originalGoal, this.day.goal);
     const weigthHasChanged = this.originalWeight !== this.day.weight
