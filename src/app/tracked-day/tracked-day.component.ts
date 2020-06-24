@@ -6,6 +6,7 @@ import * as _ from 'lodash';
 import { EventEmitter } from '@angular/core';
 import { TrackedFoodItem } from 'src/types/tracked-food-item';
 import { FoodItem } from 'src/types/food-item';
+import { MealTime } from 'src/types/enums/meal-time.enum';
 
 @Component({
   selector: 'app-tracked-day',
@@ -62,14 +63,18 @@ export class TrackedDayComponent implements OnInit {
     this.checkIfChangesArePresent();
   }
 
-  add(trackedFoodItem: TrackedFoodItem) {
-    this.day.trackAnItem(trackedFoodItem);
+  add(data: any) {
+    this.day.trackAnItem(data.trackedItem, data.mealTime);
     this.saveCurrent.emit();
   }
 
-  remove(trackedFoodItem: TrackedFoodItem) {
-    this.day.removeATrackedItem(trackedFoodItem);
+  remove(trackedFoodItem: TrackedFoodItem, mealTime: MealTime) {
+    this.day.removeATrackedItem(trackedFoodItem, mealTime);
     this.saveCurrent.emit();
+  }
+
+  edit(trackedFoodItem: TrackedFoodItem) {
+    console.log(trackedFoodItem);
   }
 
   private checkIfChangesArePresent() {

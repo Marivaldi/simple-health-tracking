@@ -6,6 +6,8 @@ import { AuthorizationService } from './authorization.service';
 import { Observable, throwError } from 'rxjs';
 import { HttpHeaders, HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { map, catchError, switchMap, mergeMap, endWith } from 'rxjs/operators';
+import { isArrayLike } from 'lodash';
+import { ThingsIAte } from 'src/types/things-iate';
 
 @Injectable({
   providedIn: 'root'
@@ -130,12 +132,26 @@ export class DietService {
       mappedDay.macros = Object.assign(new Macros(), day.macros);
       mappedDay.goal = Object.assign(new Macros(), day.goal);
       mappedDay._date = new Date(day._date);
-      mappedDay.thingsIAte = this.convertTrackedFoodItems(day.thingsIAte);
+      if(Array.isArray(day.thingsIAte)) {
+        delete mappedDay.thingsIAte;
+        mappedDay.thingsIAte = new ThingsIAte();
+        mappedDay.thingsIAte.forBreakfast = this.convertTrackedFoodItems(day.thingsIAte);
+      } else {
+        mappedDay.thingsIAte = Object.assign(new ThingsIAte(), day.thingsIAte);
+        mappedDay.thingsIAte.forBreakfast = this.convertTrackedFoodItems(day.thingsIAte.forBreakfast);
+        mappedDay.thingsIAte.asAMorningSnack = this.convertTrackedFoodItems(day.thingsIAte.asAMorningSnack);
+        mappedDay.thingsIAte.forLunch = this.convertTrackedFoodItems(day.thingsIAte.forLunch);
+        mappedDay.thingsIAte.asAnAfternoonSnack = this.convertTrackedFoodItems(day.thingsIAte.asAnAfternoonSnack);
+        mappedDay.thingsIAte.forDinner = this.convertTrackedFoodItems(day.thingsIAte.forDinner);
+        mappedDay.thingsIAte.forDessert = this.convertTrackedFoodItems(day.thingsIAte.forDessert);
+      }
       return mappedDay;
     });
   }
 
   private convertTrackedFoodItems(trackedFoodItems: TrackedFoodItem[]) {
+    if(!trackedFoodItems) return [];
+
     return trackedFoodItems.map((item) => {
       const mappedItem = Object.assign(new TrackedFoodItem(), item);
       mappedItem.macros = Object.assign(new Macros(), item.macros);

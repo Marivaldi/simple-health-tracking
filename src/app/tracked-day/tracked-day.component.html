@@ -42,14 +42,14 @@
             [class.text-success]="day.macros.protein === day.goal.protein"
             [class.text-danger]="day.macros.protein > day.goal.protein">Protein</div>
         <div class="col-3 px-0-sm" [class.text-primary]="day.macros.carbs < day.goal.carbs"
-        [class.text-success]="day.macros.carbs === day.goal.carbs"
-        [class.text-danger]="day.macros.carbs > day.goal.carbs">Carbs</div>
+            [class.text-success]="day.macros.carbs === day.goal.carbs"
+            [class.text-danger]="day.macros.carbs > day.goal.carbs">Carbs</div>
         <div class="col-3 px-0-sm" [class.text-primary]="day.macros.fats < day.goal.fats"
-        [class.text-success]="day.macros.fats === day.goal.fats"
-        [class.text-danger]="day.macros.fats > day.goal.fats">Fats</div>
+            [class.text-success]="day.macros.fats === day.goal.fats"
+            [class.text-danger]="day.macros.fats > day.goal.fats">Fats</div>
         <div class="col-3 px-0-sm" [class.text-primary]="day.macros.calories < day.goal.calories"
-        [class.text-success]="day.macros.calories === day.goal.calories"
-        [class.text-danger]="day.macros.calories > day.goal.calories">Calories</div>
+            [class.text-success]="day.macros.calories === day.goal.calories"
+            [class.text-danger]="day.macros.calories > day.goal.calories">Calories</div>
     </div>
     <div class="row data-row border">
         <div class="col-3">{{ day.macros.protein }}</div>
@@ -76,12 +76,17 @@
             <h5>Tracked Food</h5>
         </div>
     </div>
-    <div class="row pt-4 pb-4">
+    <div class="row pt-4 pb-3">
         <div class="col-12">
-            <button type="button" class="btn btn-success" (click)="openTrackingModal()">Track New Item</button>
+            <button type="button" class="btn btn-success w-100 shadow" (click)="openTrackingModal()">Track New Item</button>
         </div>
     </div>
-    <div class="row border font-weight-bold text-center-sm">
+    <div class="row border-left border-right border-top mt-5 pt-2 pb-2 bg-dark text-light rounded-top">
+        <div class="col-12 font-weight-bold text-center">
+            <h5>Breakfast</h5>
+        </div>
+    </div>
+    <div class="row border-bottom font-weight-bold text-center-sm">
         <div class="col-2 px-0-sm">Name</div>
         <div class="col-2 px-0-sm">Amount</div>
         <div class="col-2 px-0-sm">Calories</div>
@@ -89,7 +94,7 @@
         <div class="col-2 px-0-sm">Fats</div>
         <div class="col-2 px-0-sm">Carbs</div>
     </div>
-    <div *ngFor="let foodItem of day.thingsIAte" class="row border">
+    <div *ngFor="let foodItem of day.thingsIAte.forBreakfast" class="row pt-3">
         <div class="col-2">{{ foodItem.name }}</div>
         <div class="col-2">{{ foodItem.amount}}</div>
         <div class="col-2">{{ foodItem.macros.calories }}</div>
@@ -97,9 +102,148 @@
         <div class="col-2">{{ foodItem.macros.fats }}</div>
         <div class="col-2">{{ foodItem.macros.carbs }}</div>
         <div class="col-12">
-            <button type="button" class="btn btn-link text-danger float-right" (click)="remove(foodItem)">Delete</button>
+            <button type="button" class="btn btn-link text-danger float-right"
+                (click)="remove(foodItem, 'Breakfast')">Delete</button>
+            <button type="button" class="btn btn-link float-right"
+                (click)="edit(foodItem)">Edit</button>
         </div>
     </div>
+    <div class="row border-left border-right border-top mt-5 pt-2 pb-2 bg-dark text-light rounded-top">
+        <div class="col-12 font-weight-bold text-center">
+            <h5>Morning Snack</h5>
+        </div>
+    </div>
+    <div class="row border-bottom font-weight-bold text-center-sm">
+        <div class="col-2 px-0-sm">Name</div>
+        <div class="col-2 px-0-sm">Amount</div>
+        <div class="col-2 px-0-sm">Calories</div>
+        <div class="col-2 px-0-sm">Protein</div>
+        <div class="col-2 px-0-sm">Fats</div>
+        <div class="col-2 px-0-sm">Carbs</div>
+    </div>
+    <div *ngFor="let foodItem of day.thingsIAte.asAMorningSnack" class="row pt-3">
+        <div class="col-2">{{ foodItem.name }}</div>
+        <div class="col-2">{{ foodItem.amount}}</div>
+        <div class="col-2">{{ foodItem.macros.calories }}</div>
+        <div class="col-2">{{ foodItem.macros.protein }}</div>
+        <div class="col-2">{{ foodItem.macros.fats }}</div>
+        <div class="col-2">{{ foodItem.macros.carbs }}</div>
+        <div class="col-12">
+            <button type="button" class="btn btn-link text-danger float-right"
+                (click)="remove(foodItem, 'MorningSnack')">Delete</button>
+            <button type="button" class="btn btn-link float-right"
+                (click)="edit(foodItem)">Edit</button>
+        </div>
+    </div>
+    <div class="row border-left border-right border-top mt-5 pt-2 pb-2 bg-dark text-light rounded-top">
+        <div class="col-12 font-weight-bold text-center">
+            <h5>Lunch</h5>
+        </div>
+    </div>
+    <div class="row border-bottom font-weight-bold text-center-sm">
+        <div class="col-2 px-0-sm">Name</div>
+        <div class="col-2 px-0-sm">Amount</div>
+        <div class="col-2 px-0-sm">Calories</div>
+        <div class="col-2 px-0-sm">Protein</div>
+        <div class="col-2 px-0-sm">Fats</div>
+        <div class="col-2 px-0-sm">Carbs</div>
+    </div>
+    <div *ngFor="let foodItem of day.thingsIAte.forLunch" class="row pt-3">
+        <div class="col-2">{{ foodItem.name }}</div>
+        <div class="col-2">{{ foodItem.amount}}</div>
+        <div class="col-2">{{ foodItem.macros.calories }}</div>
+        <div class="col-2">{{ foodItem.macros.protein }}</div>
+        <div class="col-2">{{ foodItem.macros.fats }}</div>
+        <div class="col-2">{{ foodItem.macros.carbs }}</div>
+        <div class="col-12">
+            <button type="button" class="btn btn-link text-danger float-right"
+                (click)="remove(foodItem, 'Lunch')">Delete</button>
+            <button type="button" class="btn btn-link float-right"
+                (click)="edit(foodItem)">Edit</button>
+        </div>
+    </div>
+    <div class="row border-left border-right border-top mt-5 pt-2 pb-2 bg-dark text-light rounded-top">
+        <div class="col-12 font-weight-bold text-center">
+            <h5>Afternoon Snack</h5>
+        </div>
+    </div>
+    <div class="row border-bottom font-weight-bold text-center-sm">
+        <div class="col-2 px-0-sm">Name</div>
+        <div class="col-2 px-0-sm">Amount</div>
+        <div class="col-2 px-0-sm">Calories</div>
+        <div class="col-2 px-0-sm">Protein</div>
+        <div class="col-2 px-0-sm">Fats</div>
+        <div class="col-2 px-0-sm">Carbs</div>
+    </div>
+    <div *ngFor="let foodItem of day.thingsIAte.asAnAfternoonSnack" class="row pt-3">
+        <div class="col-2">{{ foodItem.name }}</div>
+        <div class="col-2">{{ foodItem.amount}}</div>
+        <div class="col-2">{{ foodItem.macros.calories }}</div>
+        <div class="col-2">{{ foodItem.macros.protein }}</div>
+        <div class="col-2">{{ foodItem.macros.fats }}</div>
+        <div class="col-2">{{ foodItem.macros.carbs }}</div>
+        <div class="col-12">
+            <button type="button" class="btn btn-link text-danger float-right"
+                (click)="remove(foodItem, 'AfternoonSnack')">Delete</button>
+            <button type="button" class="btn btn-link float-right"
+                (click)="edit(foodItem)">Edit</button>
+        </div>
+    </div>
+    <div class="row border-left border-right border-top mt-5 pt-2 pb-2 bg-dark text-light rounded-top">
+        <div class="col-12 font-weight-bold text-center">
+            <h5>Dinner</h5>
+        </div>
+    </div>
+    <div class="row border-bottom font-weight-bold text-center-sm">
+        <div class="col-2 px-0-sm">Name</div>
+        <div class="col-2 px-0-sm">Amount</div>
+        <div class="col-2 px-0-sm">Calories</div>
+        <div class="col-2 px-0-sm">Protein</div>
+        <div class="col-2 px-0-sm">Fats</div>
+        <div class="col-2 px-0-sm">Carbs</div>
+    </div>
+    <div *ngFor="let foodItem of day.thingsIAte.forDinner" class="row pt-3">
+        <div class="col-2">{{ foodItem.name }}</div>
+        <div class="col-2">{{ foodItem.amount}}</div>
+        <div class="col-2">{{ foodItem.macros.calories }}</div>
+        <div class="col-2">{{ foodItem.macros.protein }}</div>
+        <div class="col-2">{{ foodItem.macros.fats }}</div>
+        <div class="col-2">{{ foodItem.macros.carbs }}</div>
+        <div class="col-12">
+            <button type="button" class="btn btn-link text-danger float-right"
+                (click)="remove(foodItem, 'Dinner')">Delete</button>
+            <button type="button" class="btn btn-link float-right"
+                (click)="edit(foodItem)">Edit</button>
+        </div>
+    </div>
+    <div class="row border-left border-right border-top mt-5 pt-2 pb-2 bg-dark text-light rounded-top">
+        <div class="col-12 font-weight-bold text-center">
+            <h5>Dessert</h5>
+        </div>
+    </div>
+    <div class="row border-bottom font-weight-bold text-center-sm">
+        <div class="col-2 px-0-sm">Name</div>
+        <div class="col-2 px-0-sm">Amount</div>
+        <div class="col-2 px-0-sm">Calories</div>
+        <div class="col-2 px-0-sm">Protein</div>
+        <div class="col-2 px-0-sm">Fats</div>
+        <div class="col-2 px-0-sm">Carbs</div>
+    </div>
+    <div *ngFor="let foodItem of day.thingsIAte.forDessert" class="row pt-3">
+        <div class="col-2">{{ foodItem.name }}</div>
+        <div class="col-2">{{ foodItem.amount}}</div>
+        <div class="col-2">{{ foodItem.macros.calories }}</div>
+        <div class="col-2">{{ foodItem.macros.protein }}</div>
+        <div class="col-2">{{ foodItem.macros.fats }}</div>
+        <div class="col-2">{{ foodItem.macros.carbs }}</div>
+        <div class="col-12">
+            <button type="button" class="btn btn-link text-danger float-right"
+                (click)="remove(foodItem, 'Dessert')">Delete</button>
+            <button type="button" class="btn btn-link float-right"
+                (click)="edit(foodItem)">Edit</button>
+        </div>
+    </div>
+
 </div>
 
 <app-track-modal [pantryOptions]="pantryOptions" (finishTrackingItem)="add($event)"></app-track-modal>
