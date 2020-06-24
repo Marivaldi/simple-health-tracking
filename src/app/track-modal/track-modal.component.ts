@@ -32,16 +32,21 @@ export class TrackModalComponent implements OnInit {
   }
 
   done() {
-    const selectedFoodItem: FoodItem = this.pantryOptions[this.selectedPantryIndex];
+    const selectedFoodItem: FoodItem = this._pantryOptions[this.selectedPantryIndex];
     const trackedFoodItem: TrackedFoodItem = selectedFoodItem.track(this.amount);
     this.finishTrackingItem.emit(trackedFoodItem);
     $(this.modal.nativeElement).modal("hide");
   }
 
   selectPantryOption(index: number) {
+    if (!this._pantryOptions) return;
+
+    if(!this._pantryOptions[this.selectedPantryIndex]) return;
+
     this.selectedPantryIndex = index;
+
     this.amount = this._pantryOptions[this.selectedPantryIndex].servingSize;
-    this.setMacrosForAmount()
+    this.setMacrosForAmount();
   }
 
   changeAmount(amount: number) {

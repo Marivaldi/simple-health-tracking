@@ -5,7 +5,7 @@ import { TrackedFoodItem } from 'src/types/tracked-food-item';
 import { AuthorizationService } from './authorization.service';
 import { Observable, throwError } from 'rxjs';
 import { HttpHeaders, HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { map, catchError } from 'rxjs/operators';
+import { map, catchError, switchMap, mergeMap, endWith } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -18,26 +18,28 @@ export class DietService {
 
   save(dietDays: DietDay[]): Observable<DietDay[]> {
     const requestOptions = {
-      headers: new HttpHeaders(this.headerDict), 
+      headers: new HttpHeaders(this.headerDict),
     };
-    return this.http.post<DietDay[]>(this.health_tracking_url, dietDays,  requestOptions);
+    return this.http.post<DietDay[]>(this.health_tracking_url, dietDays, requestOptions);
   }
 
-  saveTrackedDays(trackedDays: DietDay[]) {
-    this.load().subscribe((allDays) => {
-      const sortedDays = allDays.slice().sort((a, b) => a._date.getTime() - b._date.getTime());
-      const updatedDays = sortedDays.map((day) => {
-        const indexOfTrackedDay = trackedDays.findIndex((trackedDay) => this.daysAreEqual(day, trackedDay));
-        if (indexOfTrackedDay !== -1) {
-          return Object.assign(new DietDay(), trackedDays[indexOfTrackedDay]);
-        }
+  saveTrackedDays(trackedDays: DietDay[]): Observable<DietDay[]> {
 
-        return day;
-      });
+    return this.load().pipe(
+      mergeMap((allDays: DietDay[]) => {
 
-      this.save(updatedDays).pipe(catchError(this.handleError)).subscribe();
-    });
+        const sortedDays = allDays.slice().sort((a, b) => a._date.getTime() - b._date.getTime());
+        const updatedDays = sortedDays.map((day) => {
+          const indexOfTrackedDay = trackedDays.findIndex((trackedDay) => this.daysAreEqual(day, trackedDay));
+          if (indexOfTrackedDay !== -1) {
+            return Object.assign(new DietDay(), trackedDays[indexOfTrackedDay]);
+          }
 
+          return day;
+        });
+        return this.save(updatedDays).pipe(catchError(this.handleError))
+      })
+    )
   }
 
   load(): Observable<DietDay[]> {
@@ -161,7 +163,7 @@ export class DietService {
       Authorization: this.authorizationService.getToken(),
     }
   }
-  
+
   private handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {
       console.error('An error occurred:', error.error.message);

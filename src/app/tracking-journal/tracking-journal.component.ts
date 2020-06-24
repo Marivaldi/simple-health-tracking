@@ -31,8 +31,9 @@ export class TrackingJournalComponent implements OnInit, OnDestroy {
   }
 
   saveCurrentState() {
-    this.dietService.saveTrackedDays(this.trackingDays);
-    this.dietService.loadForTracking().subscribe((trackingDays) => this.trackingDays = trackingDays);
+    this.dietService.saveTrackedDays(this.trackingDays).subscribe((days) => {
+      this.dietService.loadForTracking().subscribe((trackingDays) => this.trackingDays = trackingDays);
+    });
   }
 
   fetchPantryOptions() {
