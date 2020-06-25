@@ -95,8 +95,8 @@
         <div class="col-2 px-0-sm">Fats</div>
         <div class="col-2 px-0-sm">Carbs</div>
     </div>
-    <div cdkDropList #todoList="cdkDropList" [cdkDropListData]="day.thingsIAte.forBreakfast"
-        [cdkDropListConnectedTo]="[doneList]" (cdkDropListDropped)="drop($event)">
+    <div [class.row]="day.thingsIAte.forBreakfast.length === 0" [class.some-height]="day.thingsIAte.forBreakfast.length === 0" cdkDropList #breakfastList="cdkDropList" [cdkDropListData]="day.thingsIAte.forBreakfast"
+        [cdkDropListConnectedTo]="[morningSnackList, lunchList, afternoonSnackList, dinnerList, dessertList]" (cdkDropListDropped)="drop($event)">
         <div *ngFor="let foodItem of day.thingsIAte.forBreakfast" class="row pt-3" cdkDrag>
             <div class="col-2">{{ foodItem.name }}</div>
             <div class="col-2">{{ foodItem.amount}}</div>
@@ -124,8 +124,8 @@
         <div class="col-2 px-0-sm">Fats</div>
         <div class="col-2 px-0-sm">Carbs</div>
     </div>
-    <div cdkDropList #doneList="cdkDropList" [cdkDropListData]="day.thingsIAte.asAMorningSnack"
-        [cdkDropListConnectedTo]="[todoList]" (cdkDropListDropped)="drop($event)">
+    <div [class.row]="day.thingsIAte.asAMorningSnack.length === 0" [class.some-height]="day.thingsIAte.asAMorningSnack.length === 0" cdkDropList #morningSnackList="cdkDropList" [cdkDropListData]="day.thingsIAte.asAMorningSnack"
+        [cdkDropListConnectedTo]="[breakfastList, lunchList, afternoonSnackList, dinnerList, dessertList]" (cdkDropListDropped)="drop($event)">
         <div *ngFor="let foodItem of day.thingsIAte.asAMorningSnack" class="row pt-3" cdkDrag>
             <div class="col-2">{{ foodItem.name }}</div>
             <div class="col-2">{{ foodItem.amount}}</div>
@@ -153,17 +153,20 @@
         <div class="col-2 px-0-sm">Fats</div>
         <div class="col-2 px-0-sm">Carbs</div>
     </div>
-    <div *ngFor="let foodItem of day.thingsIAte.forLunch" class="row pt-3">
-        <div class="col-2">{{ foodItem.name }}</div>
-        <div class="col-2">{{ foodItem.amount}}</div>
-        <div class="col-2">{{ foodItem.macros.calories }}</div>
-        <div class="col-2">{{ foodItem.macros.protein }}</div>
-        <div class="col-2">{{ foodItem.macros.fats }}</div>
-        <div class="col-2">{{ foodItem.macros.carbs }}</div>
-        <div class="col-12">
-            <button type="button" class="btn btn-link text-danger float-right"
-                (click)="remove(foodItem, 'Lunch')">Delete</button>
-            <button type="button" class="btn btn-link float-right" (click)="edit(foodItem)">Edit</button>
+    <div [class.row]="day.thingsIAte.forLunch.length === 0" [class.some-height]="day.thingsIAte.forLunch.length === 0" cdkDropList #lunchList="cdkDropList" [cdkDropListData]="day.thingsIAte.forLunch"
+        [cdkDropListConnectedTo]="[breakfastList, morningSnackList, afternoonSnackList, dinnerList, dessertList]" (cdkDropListDropped)="drop($event)">
+        <div *ngFor="let foodItem of day.thingsIAte.forLunch" class="row pt-3" cdkDrag>
+            <div class="col-2">{{ foodItem.name }}</div>
+            <div class="col-2">{{ foodItem.amount}}</div>
+            <div class="col-2">{{ foodItem.macros.calories }}</div>
+            <div class="col-2">{{ foodItem.macros.protein }}</div>
+            <div class="col-2">{{ foodItem.macros.fats }}</div>
+            <div class="col-2">{{ foodItem.macros.carbs }}</div>
+            <div class="col-12">
+                <button type="button" class="btn btn-link text-danger float-right"
+                    (click)="remove(foodItem, 'Lunch')">Delete</button>
+                <button type="button" class="btn btn-link float-right" (click)="edit(foodItem)">Edit</button>
+            </div>
         </div>
     </div>
     <div class="row border-left border-right border-top mt-5 pt-2 pb-2 bg-dark text-light rounded-top">
@@ -179,17 +182,20 @@
         <div class="col-2 px-0-sm">Fats</div>
         <div class="col-2 px-0-sm">Carbs</div>
     </div>
-    <div *ngFor="let foodItem of day.thingsIAte.asAnAfternoonSnack" class="row pt-3">
-        <div class="col-2">{{ foodItem.name }}</div>
-        <div class="col-2">{{ foodItem.amount}}</div>
-        <div class="col-2">{{ foodItem.macros.calories }}</div>
-        <div class="col-2">{{ foodItem.macros.protein }}</div>
-        <div class="col-2">{{ foodItem.macros.fats }}</div>
-        <div class="col-2">{{ foodItem.macros.carbs }}</div>
-        <div class="col-12">
-            <button type="button" class="btn btn-link text-danger float-right"
-                (click)="remove(foodItem, 'AfternoonSnack')">Delete</button>
-            <button type="button" class="btn btn-link float-right" (click)="edit(foodItem)">Edit</button>
+    <div [class.row]="day.thingsIAte.asAnAfternoonSnack.length === 0" [class.some-height]="day.thingsIAte.asAnAfternoonSnack.length === 0" cdkDropList #afternoonSnackList="cdkDropList" [cdkDropListData]="day.thingsIAte.asAnAfternoonSnack"
+        [cdkDropListConnectedTo]="[breakfastList, morningSnackList, lunchList, dinnerList, dessertList]" (cdkDropListDropped)="drop($event)">
+        <div *ngFor="let foodItem of day.thingsIAte.asAnAfternoonSnack" class="row pt-3" cdkDrag>
+            <div class="col-2">{{ foodItem.name }}</div>
+            <div class="col-2">{{ foodItem.amount}}</div>
+            <div class="col-2">{{ foodItem.macros.calories }}</div>
+            <div class="col-2">{{ foodItem.macros.protein }}</div>
+            <div class="col-2">{{ foodItem.macros.fats }}</div>
+            <div class="col-2">{{ foodItem.macros.carbs }}</div>
+            <div class="col-12">
+                <button type="button" class="btn btn-link text-danger float-right"
+                    (click)="remove(foodItem, 'AfternoonSnack')">Delete</button>
+                <button type="button" class="btn btn-link float-right" (click)="edit(foodItem)">Edit</button>
+            </div>
         </div>
     </div>
     <div class="row border-left border-right border-top mt-5 pt-2 pb-2 bg-dark text-light rounded-top">
@@ -205,17 +211,20 @@
         <div class="col-2 px-0-sm">Fats</div>
         <div class="col-2 px-0-sm">Carbs</div>
     </div>
-    <div *ngFor="let foodItem of day.thingsIAte.forDinner" class="row pt-3">
-        <div class="col-2">{{ foodItem.name }}</div>
-        <div class="col-2">{{ foodItem.amount}}</div>
-        <div class="col-2">{{ foodItem.macros.calories }}</div>
-        <div class="col-2">{{ foodItem.macros.protein }}</div>
-        <div class="col-2">{{ foodItem.macros.fats }}</div>
-        <div class="col-2">{{ foodItem.macros.carbs }}</div>
-        <div class="col-12">
-            <button type="button" class="btn btn-link text-danger float-right"
-                (click)="remove(foodItem, 'Dinner')">Delete</button>
-            <button type="button" class="btn btn-link float-right" (click)="edit(foodItem)">Edit</button>
+    <div [class.row]="day.thingsIAte.forDinner.length === 0" [class.some-height]="day.thingsIAte.forDinner.length === 0" cdkDropList #dinnerList="cdkDropList" [cdkDropListData]="day.thingsIAte.forDinner"
+        [cdkDropListConnectedTo]="[breakfastList, morningSnackList, lunchList, afternoonSnackList, dessertList]" (cdkDropListDropped)="drop($event)">
+        <div *ngFor="let foodItem of day.thingsIAte.forDinner" class="row pt-3" cdkDrag>
+            <div class="col-2">{{ foodItem.name }}</div>
+            <div class="col-2">{{ foodItem.amount}}</div>
+            <div class="col-2">{{ foodItem.macros.calories }}</div>
+            <div class="col-2">{{ foodItem.macros.protein }}</div>
+            <div class="col-2">{{ foodItem.macros.fats }}</div>
+            <div class="col-2">{{ foodItem.macros.carbs }}</div>
+            <div class="col-12">
+                <button type="button" class="btn btn-link text-danger float-right"
+                    (click)="remove(foodItem, 'Dinner')">Delete</button>
+                <button type="button" class="btn btn-link float-right" (click)="edit(foodItem)">Edit</button>
+            </div>
         </div>
     </div>
     <div class="row border-left border-right border-top mt-5 pt-2 pb-2 bg-dark text-light rounded-top">
@@ -231,20 +240,22 @@
         <div class="col-2 px-0-sm">Fats</div>
         <div class="col-2 px-0-sm">Carbs</div>
     </div>
-    <div *ngFor="let foodItem of day.thingsIAte.forDessert" class="row pt-3">
-        <div class="col-2">{{ foodItem.name }}</div>
-        <div class="col-2">{{ foodItem.amount}}</div>
-        <div class="col-2">{{ foodItem.macros.calories }}</div>
-        <div class="col-2">{{ foodItem.macros.protein }}</div>
-        <div class="col-2">{{ foodItem.macros.fats }}</div>
-        <div class="col-2">{{ foodItem.macros.carbs }}</div>
-        <div class="col-12">
-            <button type="button" class="btn btn-link text-danger float-right"
-                (click)="remove(foodItem, 'Dessert')">Delete</button>
-            <button type="button" class="btn btn-link float-right" (click)="edit(foodItem)">Edit</button>
+    <div [class.row]="day.thingsIAte.forDessert.length === 0" [class.some-height]="day.thingsIAte.forDessert.length === 0"cdkDropList #dessertList="cdkDropList" [cdkDropListData]="day.thingsIAte.forDessert"
+        [cdkDropListConnectedTo]="[breakfastList, morningSnackList, lunchList, afternoonSnackList, dinnerList]" (cdkDropListDropped)="drop($event)">
+        <div *ngFor="let foodItem of day.thingsIAte.forDessert" class="row pt-3" cdkDrag>
+            <div class="col-2">{{ foodItem.name }}</div>
+            <div class="col-2">{{ foodItem.amount}}</div>
+            <div class="col-2">{{ foodItem.macros.calories }}</div>
+            <div class="col-2">{{ foodItem.macros.protein }}</div>
+            <div class="col-2">{{ foodItem.macros.fats }}</div>
+            <div class="col-2">{{ foodItem.macros.carbs }}</div>
+            <div class="col-12">
+                <button type="button" class="btn btn-link text-danger float-right"
+                    (click)="remove(foodItem, 'Dessert')">Delete</button>
+                <button type="button" class="btn btn-link float-right" (click)="edit(foodItem)">Edit</button>
+            </div>
         </div>
     </div>
-
 </div>
 
 <app-track-modal [pantryOptions]="pantryOptions" (finishTrackingItem)="add($event)"></app-track-modal>

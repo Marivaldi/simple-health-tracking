@@ -69,7 +69,7 @@ export class TrackedDayComponent implements OnInit {
     this.saveCurrent.emit();
   }
 
-  remove(trackedFoodItem: TrackedFoodItem, mealTime: MealTime) {
+  remove(trackedFoodItem: TrackedFoodItem, mealTime: string) {
     this.day.removeATrackedItem(trackedFoodItem, mealTime);
     this.saveCurrent.emit();
   }

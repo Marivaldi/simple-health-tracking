@@ -51,7 +51,7 @@ export class DietDay {
     this.macros.add(trackedFoodItem.macros);
   }
 
-  removeATrackedItem(trackedFoodItem: TrackedFoodItem,  mealTime: MealTime) {
+  removeATrackedItem(trackedFoodItem: TrackedFoodItem,  mealTime: string) {
     switch (mealTime.toString()) {
       case "Breakfast":
         this.thingsIAte.forBreakfast = this.thingsIAte.forBreakfast.filter((item: TrackedFoodItem) => item != trackedFoodItem);
