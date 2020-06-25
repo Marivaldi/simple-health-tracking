@@ -84,7 +84,12 @@
     </div>
     <div class="row border-left border-right border-top mt-5 pt-2 pb-2 bg-dark text-light rounded-top">
         <div class="col-12 font-weight-bold text-center">
-            <h5>Breakfast</h5>
+            <h5>
+                Breakfast
+                <button *ngIf="day.thingsIAte.forBreakfast.length !== 0" type="button"
+                    class="btn btn-sm btn-outline-info float-right"
+                    (click)="mealify(day.thingsIAte.forBreakfast)">Mealify</button>
+            </h5>
         </div>
     </div>
     <div class="row border-bottom font-weight-bold text-center-sm">
@@ -95,8 +100,11 @@
         <div class="col-2 px-0-sm">Fats</div>
         <div class="col-2 px-0-sm">Carbs</div>
     </div>
-    <div [class.row]="day.thingsIAte.forBreakfast.length === 0" [class.some-height]="day.thingsIAte.forBreakfast.length === 0" cdkDropList #breakfastList="cdkDropList" [cdkDropListData]="day.thingsIAte.forBreakfast"
-        [cdkDropListConnectedTo]="[morningSnackList, lunchList, afternoonSnackList, dinnerList, dessertList]" (cdkDropListDropped)="drop($event)">
+    <div [class.row]="day.thingsIAte.forBreakfast.length === 0"
+        [class.some-height]="day.thingsIAte.forBreakfast.length === 0" cdkDropList #breakfastList="cdkDropList"
+        [cdkDropListData]="day.thingsIAte.forBreakfast"
+        [cdkDropListConnectedTo]="[morningSnackList, lunchList, afternoonSnackList, dinnerList, dessertList]"
+        (cdkDropListDropped)="drop($event)">
         <div *ngFor="let foodItem of day.thingsIAte.forBreakfast" class="row pt-3" cdkDrag>
             <div class="col-2">{{ foodItem.name }}</div>
             <div class="col-2">{{ foodItem.amount}}</div>
@@ -113,7 +121,12 @@
     </div>
     <div class="row border-left border-right border-top mt-5 pt-2 pb-2 bg-dark text-light rounded-top">
         <div class="col-12 font-weight-bold text-center">
-            <h5>Morning Snack</h5>
+            <h5>
+                Morning Snack
+                <button *ngIf="day.thingsIAte.asAMorningSnack.length !== 0" type="button"
+                    class="btn btn-sm btn-outline-info float-right"
+                    (click)="mealify(day.thingsIAte.asAMorningSnack)">Mealify</button>
+            </h5>
         </div>
     </div>
     <div class="row border-bottom font-weight-bold text-center-sm">
@@ -124,8 +137,11 @@
         <div class="col-2 px-0-sm">Fats</div>
         <div class="col-2 px-0-sm">Carbs</div>
     </div>
-    <div [class.row]="day.thingsIAte.asAMorningSnack.length === 0" [class.some-height]="day.thingsIAte.asAMorningSnack.length === 0" cdkDropList #morningSnackList="cdkDropList" [cdkDropListData]="day.thingsIAte.asAMorningSnack"
-        [cdkDropListConnectedTo]="[breakfastList, lunchList, afternoonSnackList, dinnerList, dessertList]" (cdkDropListDropped)="drop($event)">
+    <div [class.row]="day.thingsIAte.asAMorningSnack.length === 0"
+        [class.some-height]="day.thingsIAte.asAMorningSnack.length === 0" cdkDropList #morningSnackList="cdkDropList"
+        [cdkDropListData]="day.thingsIAte.asAMorningSnack"
+        [cdkDropListConnectedTo]="[breakfastList, lunchList, afternoonSnackList, dinnerList, dessertList]"
+        (cdkDropListDropped)="drop($event)">
         <div *ngFor="let foodItem of day.thingsIAte.asAMorningSnack" class="row pt-3" cdkDrag>
             <div class="col-2">{{ foodItem.name }}</div>
             <div class="col-2">{{ foodItem.amount}}</div>
@@ -142,7 +158,12 @@
     </div>
     <div class="row border-left border-right border-top mt-5 pt-2 pb-2 bg-dark text-light rounded-top">
         <div class="col-12 font-weight-bold text-center">
-            <h5>Lunch</h5>
+            <h5>
+                Lunch
+                <button *ngIf="day.thingsIAte.forLunch.length !== 0" type="button"
+                    class="btn btn-sm btn-outline-info float-right"
+                    (click)="mealify(day.thingsIAte.forLunch)">Mealify</button>
+            </h5>
         </div>
     </div>
     <div class="row border-bottom font-weight-bold text-center-sm">
@@ -153,8 +174,10 @@
         <div class="col-2 px-0-sm">Fats</div>
         <div class="col-2 px-0-sm">Carbs</div>
     </div>
-    <div [class.row]="day.thingsIAte.forLunch.length === 0" [class.some-height]="day.thingsIAte.forLunch.length === 0" cdkDropList #lunchList="cdkDropList" [cdkDropListData]="day.thingsIAte.forLunch"
-        [cdkDropListConnectedTo]="[breakfastList, morningSnackList, afternoonSnackList, dinnerList, dessertList]" (cdkDropListDropped)="drop($event)">
+    <div [class.row]="day.thingsIAte.forLunch.length === 0" [class.some-height]="day.thingsIAte.forLunch.length === 0"
+        cdkDropList #lunchList="cdkDropList" [cdkDropListData]="day.thingsIAte.forLunch"
+        [cdkDropListConnectedTo]="[breakfastList, morningSnackList, afternoonSnackList, dinnerList, dessertList]"
+        (cdkDropListDropped)="drop($event)">
         <div *ngFor="let foodItem of day.thingsIAte.forLunch" class="row pt-3" cdkDrag>
             <div class="col-2">{{ foodItem.name }}</div>
             <div class="col-2">{{ foodItem.amount}}</div>
@@ -169,9 +192,15 @@
             </div>
         </div>
     </div>
+
     <div class="row border-left border-right border-top mt-5 pt-2 pb-2 bg-dark text-light rounded-top">
         <div class="col-12 font-weight-bold text-center">
-            <h5>Afternoon Snack</h5>
+            <h5>
+                Afternoon Snack
+                <button *ngIf="day.thingsIAte.asAnAfternoonSnack.length !== 0" type="button"
+                    class="btn btn-sm btn-outline-info float-right"
+                    (click)="mealify(day.thingsIAte.asAnAfternoonSnack)">Mealify</button>
+            </h5>
         </div>
     </div>
     <div class="row border-bottom font-weight-bold text-center-sm">
@@ -182,8 +211,11 @@
         <div class="col-2 px-0-sm">Fats</div>
         <div class="col-2 px-0-sm">Carbs</div>
     </div>
-    <div [class.row]="day.thingsIAte.asAnAfternoonSnack.length === 0" [class.some-height]="day.thingsIAte.asAnAfternoonSnack.length === 0" cdkDropList #afternoonSnackList="cdkDropList" [cdkDropListData]="day.thingsIAte.asAnAfternoonSnack"
-        [cdkDropListConnectedTo]="[breakfastList, morningSnackList, lunchList, dinnerList, dessertList]" (cdkDropListDropped)="drop($event)">
+    <div [class.row]="day.thingsIAte.asAnAfternoonSnack.length === 0"
+        [class.some-height]="day.thingsIAte.asAnAfternoonSnack.length === 0" cdkDropList
+        #afternoonSnackList="cdkDropList" [cdkDropListData]="day.thingsIAte.asAnAfternoonSnack"
+        [cdkDropListConnectedTo]="[breakfastList, morningSnackList, lunchList, dinnerList, dessertList]"
+        (cdkDropListDropped)="drop($event)">
         <div *ngFor="let foodItem of day.thingsIAte.asAnAfternoonSnack" class="row pt-3" cdkDrag>
             <div class="col-2">{{ foodItem.name }}</div>
             <div class="col-2">{{ foodItem.amount}}</div>
@@ -200,7 +232,12 @@
     </div>
     <div class="row border-left border-right border-top mt-5 pt-2 pb-2 bg-dark text-light rounded-top">
         <div class="col-12 font-weight-bold text-center">
-            <h5>Dinner</h5>
+            <h5>
+                Dinner
+                <button *ngIf="day.thingsIAte.forDinner.length !== 0" type="button"
+                    class="btn btn-sm btn-outline-info float-right"
+                    (click)="mealify(day.thingsIAte.forDinner)">Mealify</button>
+            </h5>
         </div>
     </div>
     <div class="row border-bottom font-weight-bold text-center-sm">
@@ -211,8 +248,10 @@
         <div class="col-2 px-0-sm">Fats</div>
         <div class="col-2 px-0-sm">Carbs</div>
     </div>
-    <div [class.row]="day.thingsIAte.forDinner.length === 0" [class.some-height]="day.thingsIAte.forDinner.length === 0" cdkDropList #dinnerList="cdkDropList" [cdkDropListData]="day.thingsIAte.forDinner"
-        [cdkDropListConnectedTo]="[breakfastList, morningSnackList, lunchList, afternoonSnackList, dessertList]" (cdkDropListDropped)="drop($event)">
+    <div [class.row]="day.thingsIAte.forDinner.length === 0" [class.some-height]="day.thingsIAte.forDinner.length === 0"
+        cdkDropList #dinnerList="cdkDropList" [cdkDropListData]="day.thingsIAte.forDinner"
+        [cdkDropListConnectedTo]="[breakfastList, morningSnackList, lunchList, afternoonSnackList, dessertList]"
+        (cdkDropListDropped)="drop($event)">
         <div *ngFor="let foodItem of day.thingsIAte.forDinner" class="row pt-3" cdkDrag>
             <div class="col-2">{{ foodItem.name }}</div>
             <div class="col-2">{{ foodItem.amount}}</div>
@@ -229,7 +268,12 @@
     </div>
     <div class="row border-left border-right border-top mt-5 pt-2 pb-2 bg-dark text-light rounded-top">
         <div class="col-12 font-weight-bold text-center">
-            <h5>Dessert</h5>
+            <h5>
+                Dessert
+                <button *ngIf="day.thingsIAte.forDessert.length !== 0" type="button"
+                    class="btn btn-sm btn-outline-info float-right"
+                    (click)="mealify(day.thingsIAte.forDessert)">Mealify</button>
+            </h5>
         </div>
     </div>
     <div class="row border-bottom font-weight-bold text-center-sm">
@@ -240,8 +284,11 @@
         <div class="col-2 px-0-sm">Fats</div>
         <div class="col-2 px-0-sm">Carbs</div>
     </div>
-    <div [class.row]="day.thingsIAte.forDessert.length === 0" [class.some-height]="day.thingsIAte.forDessert.length === 0"cdkDropList #dessertList="cdkDropList" [cdkDropListData]="day.thingsIAte.forDessert"
-        [cdkDropListConnectedTo]="[breakfastList, morningSnackList, lunchList, afternoonSnackList, dinnerList]" (cdkDropListDropped)="drop($event)">
+    <div [class.row]="day.thingsIAte.forDessert.length === 0"
+        [class.some-height]="day.thingsIAte.forDessert.length === 0" cdkDropList #dessertList="cdkDropList"
+        [cdkDropListData]="day.thingsIAte.forDessert"
+        [cdkDropListConnectedTo]="[breakfastList, morningSnackList, lunchList, afternoonSnackList, dinnerList]"
+        (cdkDropListDropped)="drop($event)">
         <div *ngFor="let foodItem of day.thingsIAte.forDessert" class="row pt-3" cdkDrag>
             <div class="col-2">{{ foodItem.name }}</div>
             <div class="col-2">{{ foodItem.amount}}</div>
@@ -259,3 +306,4 @@
 </div>
 
 <app-track-modal [pantryOptions]="pantryOptions" (finishTrackingItem)="add($event)"></app-track-modal>
+<app-meal-maker-modal></app-meal-maker-modal>

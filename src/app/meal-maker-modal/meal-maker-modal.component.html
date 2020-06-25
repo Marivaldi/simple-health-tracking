@@ -1,0 +1,44 @@
+<div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" #mealMakerModal>
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Create a New Meal</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-row">
+                        <div class="form-group col-12">
+                            <label>What would you like to call this meal?</label>
+                            <input type="text" class="form-control" [value]="mealName"
+                                (input)="changeMealName($event.target.value)" min=0>
+                        </div>
+                    </div>
+                </form>
+
+                <div class="row border-bottom font-weight-bold text-center-sm">
+                    <div class="col-2 px-0-sm">Name</div>
+                    <div class="col-2 px-0-sm">Serving Size</div>
+                    <div class="col-2 px-0-sm">Calories</div>
+                    <div class="col-2 px-0-sm">Protein</div>
+                    <div class="col-2 px-0-sm">Fats</div>
+                    <div class="col-2 px-0-sm">Carbs</div>
+                </div>
+                <div *ngFor="let foodItem of foodItems" class="row data-row pt-2 pb-3">
+                    <div class="col-2">{{ foodItem.name }}</div>
+                    <div class="col-2">{{ foodItem.servingSize}}</div>
+                    <div class="col-2">{{ foodItem.macros.calories }}</div>
+                    <div class="col-2">{{ foodItem.macros.protein }}</div>
+                    <div class="col-2">{{ foodItem.macros.fats }}</div>
+                    <div class="col-2">{{ foodItem.macros.carbs }}</div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-success px-4" (click)="done()">Create</button>
+            </div>
+        </div>
+    </div>
+</div>

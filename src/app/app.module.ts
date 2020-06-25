@@ -17,6 +17,7 @@ import { NavigationComponent } from './navigation/navigation.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {DragDropModule} from "@angular/cdk/drag-drop";
 import { MealsComponent } from './meals/meals.component';
+import { MealMakerModalComponent } from './meal-maker-modal/meal-maker-modal.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { MealsComponent } from './meals/meals.component';
     LoginComponent,
     RegisterComponent,
     NavigationComponent,
-    MealsComponent
+    MealsComponent,
+    MealMakerModalComponent
   ],
   imports: [
     BrowserModule,
