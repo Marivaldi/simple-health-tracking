@@ -8,12 +8,14 @@ import { LoginComponent } from './login/login.component';
 import { 
   AuthorizationGuardService as MustLogin 
 } from '../services/authorization-guard.service';
+import { MealsComponent } from './meals/meals.component';
 
 const routes: Routes = [
   { path: '', component: TrackingJournalComponent, canActivate: [MustLogin] },
   { path: 'login', component: LoginComponent },
   { path: 'history', component: LogHistoryComponent, canActivate: [MustLogin] },
   { path: 'pantry', component: PantryComponent, canActivate: [MustLogin] },
+  { path: 'meals', component: MealsComponent, canActivate: [MustLogin] },
 ];
 
 @NgModule({

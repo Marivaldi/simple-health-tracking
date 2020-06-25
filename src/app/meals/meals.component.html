@@ -1,0 +1,30 @@
+<div class="container-fluid">
+    <div class="row">
+        <div *ngFor="let meal of meals" class="col-md-4 pt-3">
+            <div class="card bg-dark shadow">
+                <div class="card-header text-white font-italic">
+                    <h6>{{ meal.name }}</h6>
+                </div>
+                <div class="card-body bg-white container-fluid pt-0">
+                    <div class="row border-bottom font-weight-bold text-center-sm">
+                        <div class="col-2 px-0-sm">Name</div>
+                        <div class="col-2 px-0-sm">Serving Size</div>
+                        <div class="col-2 px-0-sm">Calories</div>
+                        <div class="col-2 px-0-sm">Protein</div>
+                        <div class="col-2 px-0-sm">Fats</div>
+                        <div class="col-2 px-0-sm">Carbs</div>
+                    </div>
+                    <div *ngFor="let foodItem of meal.foodItems" class="row data-row pt-2 pb-3">
+                        <div class="col-2">{{ foodItem.name }}</div>
+                        <div class="col-2">{{ foodItem.servingSize}}</div>
+                        <div class="col-2">{{ foodItem.macros.calories }}</div>
+                        <div class="col-2">{{ foodItem.macros.protein }}</div>
+                        <div class="col-2">{{ foodItem.macros.fats }}</div>
+                        <div class="col-2">{{ foodItem.macros.carbs }}</div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
