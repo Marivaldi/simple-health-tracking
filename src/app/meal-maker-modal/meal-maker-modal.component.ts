@@ -1,6 +1,8 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { TrackedFoodItem } from 'src/types/tracked-food-item';
 import { Macros } from 'src/types/macros';
+import { MealService } from 'src/services/meal.service';
+import { Meal } from 'src/types/meal';
 
 @Component({
   selector: 'app-meal-maker-modal',
@@ -11,7 +13,7 @@ export class MealMakerModalComponent implements OnInit {
   mealName: string = "";
   @ViewChild("mealMakerModal") modal;
   foodItems: TrackedFoodItem[] = [];
-  constructor() { }
+  constructor(private mealService: MealService) { }
 
   ngOnInit(): void {
   }
@@ -21,7 +23,14 @@ export class MealMakerModalComponent implements OnInit {
   }
 
   done() {
-    console.log();
+    this.mealService.load().subscribe((meals) => {
+      const meal = new Meal();
+      meal.name = this.mealName;
+      meal.foodItems = this.foodItems;
+      meals.push(meal);
+      this.mealService.save(meals).subscribe();
+      $(this.modal.nativeElement).modal("hide");
+    });
   }
 
   open(items: TrackedFoodItem[]) {
@@ -31,7 +40,7 @@ export class MealMakerModalComponent implements OnInit {
   }
 
   private convertTrackedFoodItems(trackedFoodItems: TrackedFoodItem[]) {
-    if(!trackedFoodItems) return [];
+    if (!trackedFoodItems) return [];
 
     return trackedFoodItems.map((item) => {
       const mappedItem = Object.assign(new TrackedFoodItem(), item);
