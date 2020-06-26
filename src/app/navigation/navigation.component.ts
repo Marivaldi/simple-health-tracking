@@ -8,18 +8,16 @@ import { Router } from '@angular/router';
   styleUrls: ['./navigation.component.scss']
 })
 export class NavigationComponent implements OnInit {
+  userHasLoggedIn: boolean = false;
   constructor(private authenticationService: AuthorizationService, private router: Router) { }
 
   ngOnInit(): void {
+    this.authenticationService.userHasLoggedIn().subscribe((loggedIn)=> this.userHasLoggedIn = loggedIn);
   }
 
   logout(): void {
     this.authenticationService.logout();
     this.router.navigate(['login']);
-  }
-
-  get userHasLoggedIn(): boolean {
-    return this.authenticationService.userHasLoggedIn();
   }
 
   get username(): string {

@@ -14,6 +14,9 @@ export class LoginComponent implements OnInit {
   constructor(private authorizationService: AuthorizationService, private router: Router) { }
 
   ngOnInit(): void {
+    this.authorizationService.userHasLoggedIn().subscribe((userStillLoggedIn) => {
+      if (userStillLoggedIn) this.router.navigate(['']); 
+    });
   }
 
   login() {

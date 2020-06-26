@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { map, switchMap, catchError } from 'rxjs/operators';
+import { map, switchMap, catchError, endWith } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -22,11 +22,30 @@ export class AuthorizationService {
     }
   }
 
-  userHasLoggedIn(): boolean {
-    const userInfo = localStorage.getItem(this.token_key);
-    if (!userInfo) return false;
+  private get headersDictWithToken() {
+    return {
+      'Content-Type': 'application/json',
+      Authorization: this.getToken()
+    }
+  }
 
-    return true;
+  userHasLoggedIn(): Observable<boolean> {
+    const userInfo = localStorage.getItem(this.token_key);
+    if (!userInfo) return new Observable<boolean>((subscriber) => subscriber.next(false));
+
+    return this.tokenStillValid();
+  }
+
+  tokenStillValid(): Observable<boolean> {
+    const me_url = `${this.base_service_url}/${this.mode}/${this.me_endpoint}`;
+    return this.http.get<any>(me_url, { headers: this.headersDictWithToken }).pipe(
+      switchMap((auth) => {
+        return new Observable<boolean>((subscriber) => subscriber.next(true));
+      }),
+      catchError((err) => {
+        return new Observable<boolean>((subscriber) => subscriber.next(false));
+      })
+    );
   }
 
   getToken(): string {
