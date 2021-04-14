@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map, switchMap, catchError, endWith } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthorizationService {
+  userHasLoggedIn$: Subject<boolean> = new Subject<boolean>();
   private readonly base_service_url: string = "https://72mtzp9aq7.execute-api.us-east-1.amazonaws.com";
   private readonly mode: string = "dev";
   private readonly login_endpoint: string = "login";
@@ -68,9 +69,11 @@ export class AuthorizationService {
       switchMap((auth) => {
         const userInfo = JSON.stringify({username: username, token: auth.token })
         localStorage.setItem(this.token_key, userInfo);
+        this.userHasLoggedIn$.next(true);
         return new Observable<boolean>((subscriber) => subscriber.next(true));
       }),
       catchError((err) => {
+        this.userHasLoggedIn$.next(false);
         return new Observable<boolean>((subscriber) => subscriber.next(false));
       })
     );
@@ -78,5 +81,6 @@ export class AuthorizationService {
 
   logout(): void {
     localStorage.removeItem(this.token_key);
+    this.userHasLoggedIn$.next(false);
   }
 }
