@@ -4,7 +4,7 @@
             <div id="carouselExampleControls" class="carousel slide" data-interval="false" data-touch="true" data-ride="carousel">
                 <div class="carousel-inner">
                     <div *ngFor="let day of trackingDays; let i = index"class="carousel-item" [class.active]="i === 0">
-                        <app-tracked-day [pantryOptions]="pantryOptions" [day]="day" (saveCurrent)="saveCurrentState()"></app-tracked-day>
+                        <app-tracked-day [pantryOptions]="pantryOptions" [day]="day" (saveCurrent)="saveCurrentState()" [mealOptions]="mealOptions"></app-tracked-day>
                     </div>
                 </div>
                 <a class="carousel-control-prev d-none d-lg-flex" href="#carouselExampleControls" role="button" data-slide="prev">

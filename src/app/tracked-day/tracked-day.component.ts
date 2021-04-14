@@ -9,6 +9,7 @@ import { FoodItem } from 'src/types/food-item';
 import { MealTime } from 'src/types/enums/meal-time.enum';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { MealMakerModalComponent } from '../meal-maker-modal/meal-maker-modal.component';
+import { Meal } from 'src/types/meal';
 
 @Component({
   selector: 'app-tracked-day',
@@ -18,6 +19,7 @@ import { MealMakerModalComponent } from '../meal-maker-modal/meal-maker-modal.co
 export class TrackedDayComponent implements OnInit {
   @Input() day: DietDay;
   @Input() pantryOptions: FoodItem[];
+  @Input() mealOptions: Meal[];
   @Output() saveCurrent = new EventEmitter();
   @ViewChild(TrackModalComponent) trackingModal: TrackModalComponent;
   @ViewChild(MealMakerModalComponent) mealMakerModal: MealMakerModalComponent;
@@ -68,6 +70,15 @@ export class TrackedDayComponent implements OnInit {
 
   add(data: any) {
     this.day.trackAnItem(data.trackedItem, data.mealTime);
+    this.saveCurrent.emit();
+  }
+
+  addMeal(data: any) {
+    const items: TrackedFoodItem[] = data.items
+    const mealTime: MealTime = data.mealTime;
+    items.forEach((item: TrackedFoodItem) => {
+      this.day.trackAnItem(item, mealTime);
+    });
     this.saveCurrent.emit();
   }
 
